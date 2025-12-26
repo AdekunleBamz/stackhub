@@ -1,0 +1,81 @@
+;; StackHub Token Launchpad - Gas Optimized
+;; Creation fee: 5 STX per token launch
+
+(define-constant CONTRACT-OWNER tx-sender)
+(define-constant ERR-NOT-OWNER (err u100))
+(define-constant ERR-NOT-FOUND (err u101))
+(define-constant ERR-UNAUTHORIZED (err u102))
+(define-constant ERR-ALREADY-EXISTS (err u103))
+(define-constant CREATION-FEE u5000000) ;; 5 STX
+
+(define-data-var last-token-id uint u0)
+(define-data-var total-fees uint u0)
+
+(define-fungible-token stackhub-ft)
+
+(define-map token-info uint {
+  name: (string-ascii 32),
+  symbol: (string-ascii 10),
+  decimals: uint,
+  owner: principal,
+  total-supply: uint
+})
+
+(define-map balances {token-id: uint, owner: principal} uint)
+
+;; Read functions
+(define-read-only (get-token-info (id uint))
+  (map-get? token-info id))
+
+(define-read-only (get-balance (id uint) (who principal))
+  (default-to u0 (map-get? balances {token-id: id, owner: who})))
+
+(define-read-only (get-total-fees)
+  (var-get total-fees))
+
+(define-read-only (get-last-token-id)
+  (var-get last-token-id))
+
+;; Create new token - pays 5 STX fee
+(define-public (create-token (name (string-ascii 32)) (symbol (string-ascii 10)) (decimals uint) (initial-supply uint))
+  (let ((id (+ (var-get last-token-id) u1)))
+    (try! (stx-transfer? CREATION-FEE tx-sender CONTRACT-OWNER))
+    (map-set token-info id {
+      name: name,
+      symbol: symbol,
+      decimals: decimals,
+      owner: tx-sender,
+      total-supply: initial-supply
+    })
+    (map-set balances {token-id: id, owner: tx-sender} initial-supply)
+    (var-set last-token-id id)
+    (var-set total-fees (+ (var-get total-fees) CREATION-FEE))
+    (ok id)))
+
+;; Mint more tokens (owner only)
+(define-public (mint-tokens (id uint) (amount uint) (recipient principal))
+  (let ((info (unwrap! (map-get? token-info id) ERR-NOT-FOUND)))
+    (asserts! (is-eq tx-sender (get owner info)) ERR-UNAUTHORIZED)
+    (map-set token-info id (merge info {total-supply: (+ (get total-supply info) amount)}))
+    (map-set balances {token-id: id, owner: recipient} 
+      (+ (get-balance id recipient) amount))
+    (ok true)))
+
+;; Transfer tokens
+(define-public (transfer-token (id uint) (amount uint) (recipient principal))
+  (let ((sender-balance (get-balance id tx-sender)))
+    (asserts! (>= sender-balance amount) ERR-UNAUTHORIZED)
+    (map-set balances {token-id: id, owner: tx-sender} (- sender-balance amount))
+    (map-set balances {token-id: id, owner: recipient} (+ (get-balance id recipient) amount))
+    (ok true)))
+
+;; Burn tokens
+(define-public (burn-tokens (id uint) (amount uint))
+  (let (
+    (sender-balance (get-balance id tx-sender))
+    (info (unwrap! (map-get? token-info id) ERR-NOT-FOUND))
+  )
+    (asserts! (>= sender-balance amount) ERR-UNAUTHORIZED)
+    (map-set balances {token-id: id, owner: tx-sender} (- sender-balance amount))
+    (map-set token-info id (merge info {total-supply: (- (get total-supply info) amount)}))
+    (ok true)))
