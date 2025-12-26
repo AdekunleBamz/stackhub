@@ -1,0 +1,144 @@
+"use client";
+
+import { openContractCall } from "@stacks/connect";
+import { 
+  uintCV, 
+  stringAsciiCV,
+  principalCV,
+  PostConditionMode 
+} from "@stacks/transactions";
+import { CONTRACTS } from "@/config/contracts";
+
+// NFT Marketplace Functions
+export async function mintNFT(uri: string) {
+  const [address, contractName] = CONTRACTS.NFT_MARKETPLACE.split(".");
+  
+  await openContractCall({
+    contractAddress: address,
+    contractName: contractName,
+    functionName: "mint",
+    functionArgs: [stringAsciiCV(uri)],
+    postConditionMode: PostConditionMode.Allow,
+    onFinish: (data) => {
+      console.log("Mint NFT TX:", data.txId);
+    },
+  });
+}
+
+export async function listNFT(tokenId: number, price: number) {
+  const [address, contractName] = CONTRACTS.NFT_MARKETPLACE.split(".");
+  
+  await openContractCall({
+    contractAddress: address,
+    contractName: contractName,
+    functionName: "list-nft",
+    functionArgs: [uintCV(tokenId), uintCV(price)],
+    postConditionMode: PostConditionMode.Allow,
+    onFinish: (data) => {
+      console.log("List NFT TX:", data.txId);
+    },
+  });
+}
+
+export async function buyNFT(tokenId: number) {
+  const [address, contractName] = CONTRACTS.NFT_MARKETPLACE.split(".");
+  
+  await openContractCall({
+    contractAddress: address,
+    contractName: contractName,
+    functionName: "buy-nft",
+    functionArgs: [uintCV(tokenId)],
+    postConditionMode: PostConditionMode.Allow,
+    onFinish: (data) => {
+      console.log("Buy NFT TX:", data.txId);
+    },
+  });
+}
+
+// Token Launchpad Functions
+export async function createToken(
+  name: string,
+  symbol: string,
+  decimals: number,
+  initialSupply: number
+) {
+  const [address, contractName] = CONTRACTS.TOKEN_LAUNCHPAD.split(".");
+  
+  await openContractCall({
+    contractAddress: address,
+    contractName: contractName,
+    functionName: "create-token",
+    functionArgs: [
+      stringAsciiCV(name),
+      stringAsciiCV(symbol),
+      uintCV(decimals),
+      uintCV(initialSupply),
+    ],
+    postConditionMode: PostConditionMode.Allow,
+    onFinish: (data) => {
+      console.log("Create Token TX:", data.txId);
+    },
+  });
+}
+
+// Staking Vault Functions
+export async function stakeSTX(amount: number) {
+  const [address, contractName] = CONTRACTS.STAKING_VAULT.split(".");
+  
+  await openContractCall({
+    contractAddress: address,
+    contractName: contractName,
+    functionName: "stake",
+    functionArgs: [uintCV(amount)],
+    postConditionMode: PostConditionMode.Allow,
+    onFinish: (data) => {
+      console.log("Stake TX:", data.txId);
+    },
+  });
+}
+
+export async function requestUnstake(amount: number) {
+  const [address, contractName] = CONTRACTS.STAKING_VAULT.split(".");
+  
+  await openContractCall({
+    contractAddress: address,
+    contractName: contractName,
+    functionName: "request-unstake",
+    functionArgs: [uintCV(amount)],
+    postConditionMode: PostConditionMode.Allow,
+    onFinish: (data) => {
+      console.log("Unstake Request TX:", data.txId);
+    },
+  });
+}
+
+// Service Registry Functions
+export async function registerService(title: string, price: number) {
+  const [address, contractName] = CONTRACTS.SERVICE_REGISTRY.split(".");
+  
+  await openContractCall({
+    contractAddress: address,
+    contractName: contractName,
+    functionName: "register-service",
+    functionArgs: [stringAsciiCV(title), uintCV(price)],
+    postConditionMode: PostConditionMode.Allow,
+    onFinish: (data) => {
+      console.log("Register Service TX:", data.txId);
+    },
+  });
+}
+
+export async function payForService(serviceId: number) {
+  const [address, contractName] = CONTRACTS.SERVICE_REGISTRY.split(".");
+  
+  await openContractCall({
+    contractAddress: address,
+    contractName: contractName,
+    functionName: "pay-service",
+    functionArgs: [uintCV(serviceId)],
+    postConditionMode: PostConditionMode.Allow,
+    onFinish: (data) => {
+      console.log("Pay Service TX:", data.txId);
+    },
+  });
+}

@@ -10,6 +10,7 @@ node_modules/
 # Deployment & Transaction Scripts (SENSITIVE)
 **/scripts/
 **/deployments/
+**/transaction-generator.js
 
 # Clarinet sensitive files
 **/settings/Mainnet.toml
