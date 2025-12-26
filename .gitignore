@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+
+# Environment files (SENSITIVE - never commit!)
+.env
+.env.local
+.env.*.local
+*.env
+
+# Deployment & Transaction Scripts (SENSITIVE)
+**/scripts/
+**/deployments/
+
+# Clarinet sensitive files
+**/settings/Mainnet.toml
+**/settings/Testnet.toml
+
+# Build outputs
+.next/
+out/
+dist/
+build/
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Test coverage
+coverage/
+
+# Misc
+*.log
+*.cache
+.turbo
