@@ -1,12 +1,29 @@
 "use client";
 
 import { showConnect, AppConfig, UserSession } from "@stacks/connect";
+import { useAppKit, useAppKitAccount, useDisconnect } from "@reown/appkit/react";
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 const appConfig = new AppConfig(["store_write", "publish_data"]);
 const userSessionInstance = new UserSession({ appConfig });
 
 interface WalletContextType {
+  // Stacks wallet
+  stacksConnected: boolean;
+  stacksAddress: string | null;
+  connectStacks: () => void;
+  disconnectStacks: () => void;
+  
+  // EVM wallet (via Reown)
+  evmConnected: boolean;
+  evmAddress: string | undefined;
+  connectEvm: () => void;
+  disconnectEvm: () => void;
+  
+  // Combined
+  isAnyConnected: boolean;
+  
+  // Legacy compatibility
   connected: boolean;
   address: string | null;
   connect: () => void;
@@ -14,6 +31,15 @@ interface WalletContextType {
 }
 
 const WalletContext = createContext<WalletContextType>({
+  stacksConnected: false,
+  stacksAddress: null,
+  connectStacks: () => {},
+  disconnectStacks: () => {},
+  evmConnected: false,
+  evmAddress: undefined,
+  connectEvm: () => {},
+  disconnectEvm: () => {},
+  isAnyConnected: false,
   connected: false,
   address: null,
   connect: () => {},
@@ -21,16 +47,21 @@ const WalletContext = createContext<WalletContextType>({
 });
 
 export function WalletProvider({ children }: { children: ReactNode }) {
-  const [address, setAddress] = useState<string | null>(null);
+  const [stacksAddress, setStacksAddress] = useState<string | null>(null);
+  
+  // Reown AppKit hooks
+  const { open } = useAppKit();
+  const { address: evmAddress, isConnected: evmConnected } = useAppKitAccount();
+  const { disconnect: disconnectWagmi } = useDisconnect();
 
   useEffect(() => {
     if (userSessionInstance.isUserSignedIn()) {
       const userData = userSessionInstance.loadUserData();
-      setAddress(userData.profile.stxAddress.mainnet);
+      setStacksAddress(userData.profile.stxAddress.mainnet);
     }
   }, []);
 
-  const connect = () => {
+  const connectStacks = () => {
     showConnect({
       appDetails: {
         name: "StackHub",
@@ -43,19 +74,37 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     });
   };
 
-  const disconnect = () => {
+  const disconnectStacks = () => {
     userSessionInstance.signUserOut();
-    setAddress(null);
+    setStacksAddress(null);
     window.location.reload();
+  };
+
+  const connectEvm = () => {
+    open();
+  };
+
+  const disconnectEvm = () => {
+    disconnectWagmi();
   };
 
   return (
     <WalletContext.Provider
       value={{
-        connected: !!address,
-        address,
-        connect,
-        disconnect,
+        stacksConnected: !!stacksAddress,
+        stacksAddress,
+        connectStacks,
+        disconnectStacks,
+        evmConnected,
+        evmAddress,
+        connectEvm,
+        disconnectEvm,
+        isAnyConnected: !!stacksAddress || evmConnected,
+        // Legacy compatibility
+        connected: !!stacksAddress,
+        address: stacksAddress,
+        connect: connectStacks,
+        disconnect: disconnectStacks,
       }}
     >
       {children}

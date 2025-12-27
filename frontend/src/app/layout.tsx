@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { WalletProvider } from "@/context/WalletContext";
+import { headers } from "next/headers";
+import { ContextProvider } from "./providers";
 import { Navbar } from "@/components/Navbar";
 
 const geistSans = Geist({
@@ -19,22 +20,25 @@ export const metadata: Metadata = {
   description: "NFT Marketplace, Token Launchpad, Staking Vault & Services on Stacks",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headersList = await headers();
+  const cookies = headersList.get("cookie");
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50`}
       >
-        <WalletProvider>
+        <ContextProvider cookies={cookies}>
           <Navbar />
           <main className="min-h-screen">
             {children}
           </main>
-        </WalletProvider>
+        </ContextProvider>
       </body>
     </html>
   );

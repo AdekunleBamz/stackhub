@@ -79,9 +79,31 @@ Open [http://localhost:3000](http://localhost:3000) to view the app.
 
 - **Smart Contracts**: Clarity (version 4)
 - **Testing**: Clarinet SDK + Vitest
-- **Frontend**: Next.js 15 + React 19
-- **Wallet Integration**: @stacks/connect
-- **Network**: Stacks Mainnet
+- **Frontend**: Next.js 16 + React 19
+- **Stacks Wallet**: @stacks/connect (Leather/Hiro Wallet)
+- **EVM Wallet**: Reown AppKit + Wagmi (MetaMask, WalletConnect, etc.)
+- **Networks**: Stacks Mainnet + EVM chains (Ethereum, Arbitrum, Optimism, Polygon, Base)
+
+## 🔐 Wallet Integration
+
+StackHub supports multiple wallet types:
+
+### Stacks Wallets
+- Leather Wallet
+- Hiro Wallet
+- Xverse
+
+### EVM Wallets (via Reown AppKit)
+- MetaMask
+- WalletConnect
+- Coinbase Wallet
+- Social logins (Google, Discord, etc.)
+
+To enable EVM wallet support, get a project ID from [Reown Cloud](https://cloud.reown.com) and add it to your `.env.local`:
+
+```bash
+NEXT_PUBLIC_REOWN_PROJECT_ID=your_project_id_here
+```
 
 ## 📜 License
 
