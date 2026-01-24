@@ -37,12 +37,15 @@
 (define-read-only (get-token-uri (id uint))
   (ok (get uri (map-get? nft-data id))))
 
+;; @desc Get the owner of a token
 (define-read-only (get-owner (id uint))
   (ok (nft-get-owner? stackhub-nft id)))
 
+;; @desc Get listing details for a token
 (define-read-only (get-listing (id uint))
   (map-get? listings id))
 
+;; @desc Get total fees collected
 (define-read-only (get-total-fees)
   (var-get total-fees))
 
