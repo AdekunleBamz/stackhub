@@ -20,7 +20,7 @@
 ;; Staking Data
 (define-map stakes principal {amount: uint, start-block: uint})
 
-;; Read functions
+;; Read functions - Public Getters
 (define-read-only (get-stake (who principal))
   (map-get? stakes who))
 
