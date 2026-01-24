@@ -18,6 +18,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "StackHub - DeFi Platform on Stacks",
   description: "NFT Marketplace, Token Launchpad, Staking Vault & Services on Stacks",
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default async function RootLayout({
