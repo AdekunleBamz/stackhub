@@ -4,6 +4,12 @@ import { useState } from "react";
 import { useWallet } from "@/context/WalletContext";
 import { mintNFT, listNFT, buyNFT } from "@/lib/contracts";
 
+/**
+ * NFT Marketplace Page.
+ * - Mint new NFTs
+ * - List owned NFTs for sale
+ * - Buy listed NFTs
+ */
 export default function MarketplacePage() {
   const { connected } = useWallet();
   const [mintUri, setMintUri] = useState("");
