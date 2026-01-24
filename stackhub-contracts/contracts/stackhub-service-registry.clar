@@ -14,6 +14,7 @@
 (define-data-var last-service-id uint u0)
 (define-data-var total-fees uint u0)
 
+;; Services Data Map
 (define-map services uint {
   provider: principal,
   title: (string-ascii 64),
