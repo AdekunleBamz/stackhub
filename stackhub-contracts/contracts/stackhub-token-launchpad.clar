@@ -2,10 +2,12 @@
 ;; Creation fee: 5 STX per token launch
 
 (define-constant CONTRACT-OWNER tx-sender)
-(define-constant ERR-NOT-OWNER (err u100))
-(define-constant ERR-NOT-FOUND (err u101))
-(define-constant ERR-UNAUTHORIZED (err u102))
-(define-constant ERR-ALREADY-EXISTS (err u103))
+
+;; Error Constants
+(define-constant ERR-NOT-OWNER (err u100))      ;; Sender is not the owner
+(define-constant ERR-NOT-FOUND (err u101))      ;; Entity not found
+(define-constant ERR-UNAUTHORIZED (err u102))   ;; Unauthorized action
+(define-constant ERR-ALREADY-EXISTS (err u103)) ;; Token entity already exists
 (define-constant CREATION-FEE u5000000) ;; 5 STX
 
 (define-data-var last-token-id uint u0)
