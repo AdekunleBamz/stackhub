@@ -61,7 +61,10 @@
     (map-set listings id {price: price, seller: tx-sender})
     (ok true)))
 
-;; Unlist NFT
+;; Unlist NFT - Public Function
+;; @desc Removes an active listing for an NFT.
+;; @param id - The ID of the NFT to unlist.
+;; @returns (ok bool) - Returns true if successful.
 (define-public (unlist-nft (id uint))
   (let ((listing (unwrap! (map-get? listings id) ERR-NOT-LISTED)))
     (asserts! (is-eq tx-sender (get seller listing)) ERR-UNAUTHORIZED)
