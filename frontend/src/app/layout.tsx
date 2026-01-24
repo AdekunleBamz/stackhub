@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "StackHub - DeFi Platform on Stacks",
-  description: "NFT Marketplace, Token Launchpad, Staking Vault & Services on Stacks",
+  title: "StackHub | Premium DeFi on Stacks",
+  description: "The all-in-one platform for NFTs, Tokens, Staking, and Services on the Stacks blockchain.",
   icons: {
     icon: "/logo.png",
   },
