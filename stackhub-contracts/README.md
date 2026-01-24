@@ -15,3 +15,8 @@ Run tests:
 ```bash
 npm test
 ```
+
+## License
+
+MIT
+
