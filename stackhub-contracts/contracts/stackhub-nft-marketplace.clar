@@ -37,7 +37,10 @@
 (define-read-only (get-total-fees)
   (var-get total-fees))
 
-;; Mint NFT
+;; Mint NFT - Public Function
+;; @desc Mints a new NFT with the specified Metadata URI.
+;; @param uri - The metadata URI string (max 256 chars).
+;; @returns (ok uint) - Returns the token ID of the minted NFT.
 (define-public (mint (uri (string-ascii 256)))
   (let ((id (+ (var-get last-token-id) u1)))
     (try! (nft-mint? stackhub-nft id tx-sender))
