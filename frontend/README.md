@@ -8,6 +8,19 @@ This is the Next.js 16 frontend for the StackHub platform.
 - **Interactions**: Direct contract calls for Marketplace, Launchpad, Staking, and Services.
 - **Styling**: TailwindCSS with modern UI components.
 
+## Available Scripts
+
+- `npm run dev`: Start development server
+- `npm run build`: Build for production
+- `npm run start`: Start production server
+- `npm run lint`: Run ESLint
+
+## Architecture
+
+- **Next.js 16 (App Router)**: Framework
+- **Reown AppKit**: Wallet connection
+- **Stacks.js**: Blockchain interaction
+
 ## Getting Started
 
 First, run the development server:
