@@ -9,7 +9,7 @@
     "test:report": "vitest run -- --coverage --costs",
     "test:watch": "chokidar \"tests/**/*.ts\" \"contracts/**/*.clar\" -c \"npm run test:report\""
   },
-  "author": "",
+  "author": "StackHub Team",
   "license": "ISC",
   "dependencies": {
     "@scure/bip32": "^2.0.1",
