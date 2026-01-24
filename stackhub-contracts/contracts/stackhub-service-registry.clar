@@ -78,7 +78,10 @@
     (map-set services id (merge service {active: (not (get active service))}))
     (ok true)))
 
-;; Pay for service - 1.5% fee to platform
+;; Pay Service - Public Function
+;; @desc Process payment for a service. Splits fee between provider and platform.
+;; @param id - The ID of the service to pay for.
+;; @returns (ok tuple) - Returns payment details.
 (define-public (pay-service (id uint))
   (let (
     (service (unwrap! (map-get? services id) ERR-NOT-FOUND))
