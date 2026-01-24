@@ -23,7 +23,9 @@
 (define-non-fungible-token stackhub-nft uint)
 
 ;; Data Maps
+;; @desc Stores URI and creator principal for each NFT
 (define-map nft-data uint {uri: (string-ascii 256), creator: principal})
+;; @desc Stores listing details (price, seller) for NFTs on sale
 (define-map listings uint {price: uint, seller: principal})
 
 ;; Read functions - Public Getters
