@@ -29,9 +29,11 @@
 (define-map listings uint {price: uint, seller: principal})
 
 ;; Read functions - Public Getters
+;; @desc Get the ID of the last minted token
 (define-read-only (get-last-token-id)
   (ok (var-get last-token-id)))
 
+;; @desc Get the metadata URI for a token
 (define-read-only (get-token-uri (id uint))
   (ok (get uri (map-get? nft-data id))))
 
