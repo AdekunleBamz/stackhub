@@ -11,6 +11,9 @@ import { FEES } from "@/config/contracts";
 export default function HomePage() {
   const { connected } = useWallet();
 
+  /**
+   * Feature configuration for the dashboard grid.
+   */
   const features = [
     {
       title: "NFT Marketplace",
