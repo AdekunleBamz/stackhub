@@ -2,6 +2,10 @@
 
 import { useWallet } from "@/context/WalletContext";
 
+/**
+ * Dual-wallet connection button component.
+ * Handles connection states for both Stacks (Leather/Xverse) and EVM wallets.
+ */
 export function ConnectButton() {
   const { 
     stacksConnected, 
