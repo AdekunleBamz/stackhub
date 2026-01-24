@@ -14,6 +14,9 @@ export default function StakingPage() {
   const [stakeAmount, setStakeAmount] = useState("");
   const [unstakeAmount, setUnstakeAmount] = useState("");
 
+  /**
+   * Handles staking amount conversion and contract call.
+   */
   const handleStake = async () => {
     if (!stakeAmount) return alert("Please enter amount");
     const amount = parseFloat(stakeAmount) * 1000000; // Convert to microstacks
