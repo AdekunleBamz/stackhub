@@ -13,10 +13,13 @@
 ;; @desc 1.5% transaction fee on payments
 (define-constant TX-FEE u150) ;; 1.5% = 150/10000
 
+;; @desc Tracks the most recent Service ID
 (define-data-var last-service-id uint u0)
+;; @desc Tracks total platform fees collected
 (define-data-var total-fees uint u0)
 
 ;; Services Data Map
+;; @desc Stores details for each registered service
 (define-map services uint {
   provider: principal,
   title: (string-ascii 64),
@@ -24,6 +27,7 @@
   active: bool
 })
 
+;; @desc Tracks earnings for each provider
 (define-map provider-earnings principal uint)
 
 ;; Read functions - Public Getters
