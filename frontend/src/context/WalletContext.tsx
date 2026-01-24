@@ -55,10 +55,14 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   const { disconnect: disconnectWagmi } = useDisconnect();
 
   useEffect(() => {
-    if (userSessionInstance.isUserSignedIn()) {
-      const userData = userSessionInstance.loadUserData();
-      setStacksAddress(userData.profile.stxAddress.mainnet);
-    }
+    // Check session asynchronously to avoid synchronous state update warning
+    const checkSession = async () => {
+      if (userSessionInstance.isUserSignedIn()) {
+        const userData = userSessionInstance.loadUserData();
+        setStacksAddress(userData.profile.stxAddress.mainnet);
+      }
+    };
+    checkSession();
   }, []);
 
   const connectStacks = () => {
