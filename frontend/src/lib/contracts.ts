@@ -145,6 +145,12 @@ export async function requestUnstake(amount: number) {
 }
 
 // Service Registry Functions
+/**
+ * Register a new off-chain service on-chain.
+ * @param title - The service title.
+ * @param price - The service cost in micro-STX.
+ * Calls `stackhub-service-registry.register-service`.
+ */
 export async function registerService(title: string, price: number) {
   const [address, contractName] = CONTRACTS.SERVICE_REGISTRY.split(".");
   
