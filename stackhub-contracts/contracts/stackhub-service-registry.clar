@@ -68,7 +68,10 @@
     (map-set services id (merge service {title: title, price: price}))
     (ok true)))
 
-;; Toggle service active/inactive
+;; Toggle Service Status - Public Function
+;; @desc Activates or deactivates a service listing.
+;; @param id - The ID of the service.
+;; @returns (ok bool) - Returns true if successful.
 (define-public (toggle-service (id uint))
   (let ((service (unwrap! (map-get? services id) ERR-NOT-FOUND)))
     (asserts! (is-eq tx-sender (get provider service)) ERR-UNAUTHORIZED)
