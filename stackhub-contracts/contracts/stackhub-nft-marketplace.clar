@@ -17,6 +17,7 @@
 
 (define-non-fungible-token stackhub-nft uint)
 
+;; Data Maps
 (define-map nft-data uint {uri: (string-ascii 256), creator: principal})
 (define-map listings uint {price: uint, seller: principal})
 
