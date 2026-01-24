@@ -2,6 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "description": "Next.js Frontend for StackHub Interface",
+  "author": "StackHub Team",
   "private": true,
   "scripts": {
     "dev": "next dev --webpack",
