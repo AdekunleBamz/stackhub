@@ -27,6 +27,9 @@ export default function ServicesPage() {
     setPrice("");
   };
 
+  /**
+   * Processes payment for a registered service.
+   */
   const handlePay = async () => {
     if (!serviceId) return alert("Please enter service ID");
     await payForService(parseInt(serviceId));
