@@ -87,7 +87,11 @@
     (map-set balances {token-id: id, owner: recipient} (+ (get-balance id recipient) amount))
     (ok true)))
 
-;; Burn tokens
+;; Burn Tokens - Public Function
+;; @desc Burns tokens, reducing total supply.
+;; @param id - The ID of the token.
+;; @param amount - The amount to burn.
+;; @returns (ok bool) - Returns true if successful.
 (define-public (burn-tokens (id uint) (amount uint))
   (let (
     (sender-balance (get-balance id tx-sender))
