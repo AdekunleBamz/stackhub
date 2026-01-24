@@ -4,6 +4,11 @@ import { useState } from "react";
 import { useWallet } from "@/context/WalletContext";
 import { stakeSTX, requestUnstake } from "@/lib/contracts";
 
+/**
+ * Staking Vault Page.
+ * Users can stake STX to earn rewards and request unstaking.
+ * Interacts with `stackhub-staking-vault`.
+ */
 export default function StakingPage() {
   const { connected } = useWallet();
   const [stakeAmount, setStakeAmount] = useState("");
