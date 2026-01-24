@@ -48,7 +48,11 @@
     (var-set last-token-id id)
     (ok id)))
 
-;; List NFT for sale
+;; List NFT - Public Function
+;; @desc Lists an NFT for sale at a specific price.
+;; @param id - The ID of the NFT to list.
+;; @param price - The price in micro-STX.
+;; @returns (ok bool) - Returns true if successful.
 (define-public (list-nft (id uint) (price uint))
   (begin
     (asserts! (is-eq (some tx-sender) (nft-get-owner? stackhub-nft id)) ERR-UNAUTHORIZED)
