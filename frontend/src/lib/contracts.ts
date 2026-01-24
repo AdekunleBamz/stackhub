@@ -4,7 +4,6 @@ import { openContractCall } from "@stacks/connect";
 import { 
   uintCV, 
   stringAsciiCV,
-  principalCV,
   PostConditionMode 
 } from "@stacks/transactions";
 import { CONTRACTS } from "@/config/contracts";
