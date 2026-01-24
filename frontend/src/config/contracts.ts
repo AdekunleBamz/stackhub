@@ -1,7 +1,11 @@
 // Contract addresses - MAINNET DEPLOYED
+/**
+ * Deployed contract principal references on the Stacks Mainnet.
+ * Used for all on-chain interactions.
+ */
 export const CONTRACTS = {
   NFT_MARKETPLACE: "SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.stackhub-nft-marketplace",
-  TOKEN_LAUNCHPAD: "SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.stackhub-token-launchpad", 
+  TOKEN_LAUNCHPAD: "SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.stackhub-token-launchpad",  
   STAKING_VAULT: "SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.stackhub-staking-vault",
   SERVICE_REGISTRY: "SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.stackhub-service-registry",
 };
