@@ -22,6 +22,8 @@ path = 'contracts/stackhub-service-registry.clar'
 clarity_version = 4
 epoch = 'latest'
 
+# Contract: Staking Vault
+# Logic for time-locked stacking and rewards.
 [contracts.stackhub-staking-vault]
 path = 'contracts/stackhub-staking-vault.clar'
 clarity_version = 4
