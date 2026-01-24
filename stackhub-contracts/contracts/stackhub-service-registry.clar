@@ -56,7 +56,12 @@
     (var-set total-fees (+ (var-get total-fees) LISTING-FEE))
     (ok id)))
 
-;; Update service
+;; Update Service - Public Function
+;; @desc Updates the details of an existing service.
+;; @param id - The ID of the service.
+;; @param title - The new title.
+;; @param price - The new price.
+;; @returns (ok bool) - Returns true if successful.
 (define-public (update-service (id uint) (title (string-ascii 64)) (price uint))
   (let ((service (unwrap! (map-get? services id) ERR-NOT-FOUND)))
     (asserts! (is-eq tx-sender (get provider service)) ERR-UNAUTHORIZED)
