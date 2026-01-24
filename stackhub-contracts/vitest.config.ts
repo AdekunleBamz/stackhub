@@ -4,6 +4,11 @@ import {
   getClarinetVitestsArgv,
 } from "@stacks/clarinet-sdk/vitest";
 
+/**
+ * Vitest Configuration for Clarinet Integration
+ * Enables unit testing of Clarity smart contracts using the Clarinet SDK.
+ */
+
 /*
   In this file, Vitest is configured so that it works seamlessly with Clarinet and the Simnet.
 
