@@ -38,7 +38,10 @@
     s (>= (- stacks-block-height (get start-block s)) MIN-LOCK-BLOCKS)
     false))
 
-;; Stake STX - transfers to contract owner (vault keeper)
+;; Stake STX - Public Function
+;; @desc Stacks STX in the vault. Funds move to contract owner (vault keeper).
+;; @param amount - The amount of uSTX to stake.
+;; @returns (ok bool) - Returns true if successful.
 (define-public (stake (amount uint))
   (let ((current-stake (map-get? stakes tx-sender)))
     (asserts! (> amount u0) ERR-ZERO)
