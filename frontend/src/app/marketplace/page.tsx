@@ -17,6 +17,9 @@ export default function MarketplacePage() {
   const [listPrice, setListPrice] = useState("");
   const [buyTokenId, setBuyTokenId] = useState("");
 
+  /**
+   * Orchestrates the NFT minting process.
+   */
   const handleMint = async () => {
     if (!mintUri) return alert("Please enter IPFS URI");
     await mintNFT(mintUri);
