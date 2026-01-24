@@ -44,6 +44,7 @@
 (define-read-only (get-vault-balance)
   (var-get vault-balance))
 
+;; @desc Check if user can unstake without early penalty
 (define-read-only (can-unstake-free (who principal))
   (match (map-get? stakes who) 
     s (>= (- stacks-block-height (get start-block s)) MIN-LOCK-BLOCKS)
