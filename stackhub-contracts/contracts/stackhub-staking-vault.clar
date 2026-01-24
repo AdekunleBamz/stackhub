@@ -57,8 +57,11 @@
     (var-set vault-balance (+ (var-get vault-balance) amount))
     (ok true)))
 
-;; Unstake - owner sends back minus fee
-;; Note: This is a 2-step process - user requests, owner fulfills
+;; Process Unstake - Admin Function
+;; @desc Contract owner processes valid unstake requests with fee deduction.
+;; @param staker - The principal of the staker.
+;; @param amount - The amount to return.
+;; @returns (ok tuple) - Returns payout details and fee.
 (define-public (process-unstake (staker principal) (amount uint))
   (let (
     (stake-data (unwrap! (map-get? stakes staker) ERR-NO-STAKE))
