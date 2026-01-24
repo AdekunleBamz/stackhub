@@ -46,6 +46,11 @@ const WalletContext = createContext<WalletContextType>({
   disconnect: () => {},
 });
 
+/**
+ * Global wallet provider component.
+ * Manages state for Stacks (via stacks.js) and EVM (via Reown AppKit) wallets.
+ * Provides a unified interface for connection status and addresses.
+ */
 export function WalletProvider({ children }: { children: ReactNode }) {
   const [stacksAddress, setStacksAddress] = useState<string | null>(null);
   
