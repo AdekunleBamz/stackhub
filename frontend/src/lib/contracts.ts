@@ -49,6 +49,11 @@ export async function listNFT(tokenId: number, price: number) {
   });
 }
 
+/**
+ * Purchase an NFT from the marketplace.
+ * @param tokenId - The ID of the NFT to buy.
+ * Calls `stackhub-nft-marketplace.buy-nft`.
+ */
 export async function buyNFT(tokenId: number) {
   const [address, contractName] = CONTRACTS.NFT_MARKETPLACE.split(".");
   
