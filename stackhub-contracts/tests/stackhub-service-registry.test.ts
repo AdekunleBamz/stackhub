@@ -2,6 +2,11 @@
 import { describe, expect, it } from "vitest";
 import { Cl } from "@stacks/transactions";
 
+/**
+ * Test Suite: StackHub Service Registry
+ * Tests service registration, updates, status toggling, and payments.
+ * Ensures platform fees are collected correctly.
+ */
 const accounts = simnet.getAccounts();
 const deployer = accounts.get("deployer")!;
 const wallet1 = accounts.get("wallet_1")!;
