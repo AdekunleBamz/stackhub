@@ -31,9 +31,11 @@
 (define-map provider-earnings principal uint)
 
 ;; Read functions - Public Getters
+;; @desc Get service details by ID
 (define-read-only (get-service (id uint))
   (map-get? services id))
 
+;; @desc Get total fees collected
 (define-read-only (get-total-fees)
   (var-get total-fees))
 
