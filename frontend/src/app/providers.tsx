@@ -5,9 +5,9 @@ import { ReownProvider } from '@/context/ReownContext';
 import { WalletProvider } from '@/context/WalletContext';
 
 /**
- * Application Context Provider wrapper.
- * Combines Reown (AppKit) and Wallet providers.
- * Handles initial cookie state for SSR.
+ * Application Global Provider
+ * Wraps the app with Reown (AppKit) and Wallet contexts.
+ * Handles initial cookie state for server-side rendering support.
  */
 export function ContextProvider({ 
   children, 
