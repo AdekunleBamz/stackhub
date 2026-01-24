@@ -124,6 +124,11 @@ export async function stakeSTX(amount: number) {
   });
 }
 
+/**
+ * Request to unstake tokens from the vault.
+ * @param amount - The amount to unstake in micro-STX.
+ * Calls `stackhub-staking-vault.request-unstake`.
+ */
 export async function requestUnstake(amount: number) {
   const [address, contractName] = CONTRACTS.STAKING_VAULT.split(".");
   
