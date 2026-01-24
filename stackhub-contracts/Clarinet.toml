@@ -7,6 +7,9 @@ authors = ['AdekunleBamz']
 telemetry = true
 cache_dir = './.cache'
 requirements = []
+
+# Contract: NFT Marketplace
+# Logic for listing, dealing, and minting NFTs.
 [contracts.stackhub-nft-marketplace]
 path = 'contracts/stackhub-nft-marketplace.clar'
 clarity_version = 4
