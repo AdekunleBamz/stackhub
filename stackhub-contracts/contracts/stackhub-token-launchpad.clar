@@ -60,7 +60,12 @@
     (var-set total-fees (+ (var-get total-fees) CREATION-FEE))
     (ok id)))
 
-;; Mint more tokens (owner only)
+;; Mint Tokens - Public Function
+;; @desc Mints additional tokens (Owner only).
+;; @param id - The ID of the token.
+;; @param amount - The amount to mint.
+;; @param recipient - The receiver address.
+;; @returns (ok bool) - Returns true if successful.
 (define-public (mint-tokens (id uint) (amount uint) (recipient principal))
   (let ((info (unwrap! (map-get? token-info id) ERR-NOT-FOUND)))
     (asserts! (is-eq tx-sender (get owner info)) ERR-UNAUTHORIZED)
