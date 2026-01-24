@@ -4,6 +4,11 @@ import { useState } from "react";
 import { useWallet } from "@/context/WalletContext";
 import { createToken } from "@/lib/contracts";
 
+/**
+ * Token Launchpad Page.
+ * Allows users to create new SIP-010 fungible tokens.
+ * Handles form input and calls `createToken` contract function.
+ */
 export default function LaunchpadPage() {
   const { connected } = useWallet();
   const [name, setName] = useState("");
