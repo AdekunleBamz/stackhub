@@ -32,15 +32,19 @@
 (define-map balances {token-id: uint, owner: principal} uint)
 
 ;; Read functions - Public Getters
+;; @desc Get token metadata
 (define-read-only (get-token-info (id uint))
   (map-get? token-info id))
 
+;; @desc Get balance of a specific token for a user
 (define-read-only (get-balance (id uint) (who principal))
   (default-to u0 (map-get? balances {token-id: id, owner: who})))
 
+;; @desc Get total platform fees
 (define-read-only (get-total-fees)
   (var-get total-fees))
 
+;; @desc Get current token count
 (define-read-only (get-last-token-id)
   (var-get last-token-id))
 
