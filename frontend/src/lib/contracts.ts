@@ -8,7 +8,11 @@ import {
 } from "@stacks/transactions";
 import { CONTRACTS } from "@/config/contracts";
 
-// NFT Marketplace Functions
+/**
+ * Mint a new NFT on the StackHub marketplace.
+ * @param uri - The metadata URI for the NFT.
+ * Initiates a contract call to `stackhub-nft-marketplace.mint`.
+ */
 export async function mintNFT(uri: string) {
   const [address, contractName] = CONTRACTS.NFT_MARKETPLACE.split(".");
   
