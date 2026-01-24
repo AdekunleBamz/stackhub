@@ -22,8 +22,10 @@ export const metadata: Metadata = {
     icon: "/logo.png",
   },
 };
-
-export default async function RootLayout({
+/**
+ * Root Layout Component.
+ * Wraps the entire application with global providers and standard structure.
+ */export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
