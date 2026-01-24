@@ -39,9 +39,11 @@
 (define-read-only (get-total-fees)
   (var-get total-fees))
 
+;; @desc Get last assigned service ID
 (define-read-only (get-last-service-id)
   (var-get last-service-id))
 
+;; @desc Get total earnings for a provider
 (define-read-only (get-earnings (who principal))
   (default-to u0 (map-get? provider-earnings who)))
 
