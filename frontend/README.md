@@ -1,4 +1,12 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# StackHub Frontend
+
+This is the Next.js 16 frontend for the StackHub platform.
+
+## Features
+
+- **Wallet Connection**: Supports Stacks (Leather/Xverse) and EVM wallets via Reown.
+- **Interactions**: Direct contract calls for Marketplace, Launchpad, Staking, and Services.
+- **Styling**: TailwindCSS with modern UI components.
 
 ## Getting Started
 
