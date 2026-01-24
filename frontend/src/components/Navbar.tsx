@@ -3,6 +3,10 @@
 import Link from "next/link";
 import { ConnectButton } from "./ConnectButton";
 
+/**
+ * Navigation bar component containing links to main application features.
+ * Displays branding and the wallet connection button.
+ */
 export function Navbar() {
   return (
     <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
