@@ -28,6 +28,12 @@ export async function mintNFT(uri: string) {
   });
 }
 
+/**
+ * List an NFT for sale on the marketplace.
+ * @param tokenId - The ID of the NFT to list.
+ * @param price - The sale price in micro-STX.
+ * Calls `stackhub-nft-marketplace.list-nft`.
+ */
 export async function listNFT(tokenId: number, price: number) {
   const [address, contractName] = CONTRACTS.NFT_MARKETPLACE.split(".");
   
