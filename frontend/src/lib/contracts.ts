@@ -166,6 +166,11 @@ export async function registerService(title: string, price: number) {
   });
 }
 
+/**
+ * Pay for a registered service.
+ * @param serviceId - The ID of the service to pay for.
+ * Calls `stackhub-service-registry.pay-service`.
+ */
 export async function payForService(serviceId: number) {
   const [address, contractName] = CONTRACTS.SERVICE_REGISTRY.split(".");
   
