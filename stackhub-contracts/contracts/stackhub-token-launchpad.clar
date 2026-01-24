@@ -74,7 +74,12 @@
       (+ (get-balance id recipient) amount))
     (ok true)))
 
-;; Transfer tokens
+;; Transfer Token - Public Function
+;; @desc Transfers tokens between principals.
+;; @param id - The ID of the token.
+;; @param amount - The amount to transfer.
+;; @param recipient - The receiver address.
+;; @returns (ok bool) - Returns true if successful.
 (define-public (transfer-token (id uint) (amount uint) (recipient principal))
   (let ((sender-balance (get-balance id tx-sender)))
     (asserts! (>= sender-balance amount) ERR-UNAUTHORIZED)
