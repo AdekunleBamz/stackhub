@@ -14,7 +14,10 @@
 ;; @desc 1.25% fee (125 basis points)
 (define-constant PLATFORM-FEE u125) ;; 1.25% = 125/10000
 
+;; Data Variables
+;; @desc Tracks the most recently minted Token ID
 (define-data-var last-token-id uint u0)
+;; @desc Tracks total fees collected by the platform
 (define-data-var total-fees uint u0)
 
 (define-non-fungible-token stackhub-nft uint)
