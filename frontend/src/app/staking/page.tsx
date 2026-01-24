@@ -24,6 +24,9 @@ export default function StakingPage() {
     setStakeAmount("");
   };
 
+  /**
+   * Handles unstaking request.
+   */
   const handleUnstake = async () => {
     if (!unstakeAmount) return alert("Please enter amount");
     const amount = parseFloat(unstakeAmount) * 1000000;
