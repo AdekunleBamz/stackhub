@@ -24,7 +24,7 @@
 
 (define-map provider-earnings principal uint)
 
-;; Read functions
+;; Read functions - Public Getters
 (define-read-only (get-service (id uint))
   (map-get? services id))
 
