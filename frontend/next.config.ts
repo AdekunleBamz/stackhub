@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
    * Enable React Compiler for experimental optimizations.
    */
   reactCompiler: true,
+  /**
+   * Configure Turbopack options (empty for defaults).
+   */
   turbopack: {},
   webpack: (config, { isServer }) => {
     if (!isServer) {
