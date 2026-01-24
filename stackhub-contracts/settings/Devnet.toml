@@ -1,3 +1,6 @@
+# Development Network Configuration
+# Used for local `clarinet integrate` and `clarinet console` sessions.
+# Standard well-known accounts for testing.
 [network]
 name = "devnet"
 deployment_fee_rate = 10
