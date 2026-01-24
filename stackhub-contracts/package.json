@@ -1,7 +1,7 @@
 {
   "name": "stackhub-contracts-tests",
   "version": "1.0.0",
-  "description": "Run unit tests on this project.",
+  "description": "Smart Contract Tests and Scripts for StackHub",
   "type": "module",
   "private": true,
   "scripts": {
