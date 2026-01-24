@@ -28,9 +28,11 @@
 (define-map stakes principal {amount: uint, start-block: uint})
 
 ;; Read functions - Public Getters
+;; @desc Get staking info for a user
 (define-read-only (get-stake (who principal))
   (map-get? stakes who))
 
+;; @desc Get global total staked
 (define-read-only (get-total-staked)
   (var-get total-staked))
 
