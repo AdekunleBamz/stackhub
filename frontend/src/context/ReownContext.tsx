@@ -7,6 +7,10 @@ import { ReactNode, useState } from 'react';
 import { wagmiAdapter, projectId, networks } from '@/config/wagmi';
 
 // Set up metadata
+/**
+ * Application metadata used by Reown AppKit for wallet connection modals.
+ * Displayed to users when connecting their wallets.
+ */
 const metadata = {
   name: 'StackHub',
   description: 'DeFi Platform on Stacks - NFT Marketplace, Token Launchpad, Staking & Services',
