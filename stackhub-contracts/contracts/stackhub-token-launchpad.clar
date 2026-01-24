@@ -4,10 +4,12 @@
 (define-constant CONTRACT-OWNER tx-sender)
 
 ;; Error Constants
+;; @desc Error code when sender is not owner (u100)
 (define-constant ERR-NOT-OWNER (err u100))      ;; Sender is not the owner
 (define-constant ERR-NOT-FOUND (err u101))      ;; Entity not found
 (define-constant ERR-UNAUTHORIZED (err u102))   ;; Unauthorized action
 (define-constant ERR-ALREADY-EXISTS (err u103)) ;; Token entity already exists
+;; @desc 5 STX fixed fee for creation
 (define-constant CREATION-FEE u5000000) ;; 5 STX
 
 (define-data-var last-token-id uint u0)
