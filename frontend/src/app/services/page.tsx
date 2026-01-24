@@ -15,6 +15,10 @@ export default function ServicesPage() {
   const [price, setPrice] = useState("");
   const [serviceId, setServiceId] = useState("");
 
+  /**
+   * Validates input and registers a new service.
+   * Converts price to microSTX.
+   */
   const handleRegister = async () => {
     if (!title || !price) return alert("Please fill all fields");
     const priceInMicrostacks = parseFloat(price) * 1000000;
