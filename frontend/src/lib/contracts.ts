@@ -104,6 +104,11 @@ export async function createToken(
 }
 
 // Staking Vault Functions
+/**
+ * Stake STX tokens in the vault.
+ * @param amount - The amount to stake in micro-STX.
+ * Calls `stackhub-staking-vault.stake`.
+ */
 export async function stakeSTX(amount: number) {
   const [address, contractName] = CONTRACTS.STAKING_VAULT.split(".");
   
