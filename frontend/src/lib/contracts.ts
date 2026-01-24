@@ -70,6 +70,14 @@ export async function buyNFT(tokenId: number) {
 }
 
 // Token Launchpad Functions
+/**
+ * Create a new token using the Launchpad.
+ * @param name - The name of the token.
+ * @param symbol - The token symbol (3-5 chars).
+ * @param decimals - Decimal places (usually 6).
+ * @param initialSupply - The initial supply value.
+ * Calls `stackhub-token-launchpad.create-token`.
+ */
 export async function createToken(
   name: string,
   symbol: string,
