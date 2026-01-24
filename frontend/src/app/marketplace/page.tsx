@@ -26,6 +26,10 @@ export default function MarketplacePage() {
     setMintUri("");
   };
 
+  /**
+   * Orchestrates the NFT listing process.
+   * Converts price to microSTX before calling contract.
+   */
   const handleList = async () => {
     if (!listTokenId || !listPrice) return alert("Please fill all fields");
     await listNFT(parseInt(listTokenId), parseInt(listPrice) * 1000000);
