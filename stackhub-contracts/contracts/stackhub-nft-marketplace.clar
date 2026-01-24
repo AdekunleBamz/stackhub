@@ -21,7 +21,7 @@
 (define-map nft-data uint {uri: (string-ascii 256), creator: principal})
 (define-map listings uint {price: uint, seller: principal})
 
-;; Read functions
+;; Read functions - Public Getters
 (define-read-only (get-last-token-id)
   (ok (var-get last-token-id)))
 
