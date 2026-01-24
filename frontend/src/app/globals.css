@@ -1,3 +1,8 @@
+/*
+ * StackHub Global Styles
+ * Based on Tailwind CSS v4 with custom theme properties.
+ * Supports dark mode via `prefers-color-scheme`.
+ */
 @import "tailwindcss";
 
 :root {
