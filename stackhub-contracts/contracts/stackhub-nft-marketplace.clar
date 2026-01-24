@@ -90,7 +90,11 @@
     (var-set total-fees (+ (var-get total-fees) fee))
     (ok true)))
 
-;; Transfer NFT
+;; Transfer NFT - Public Function
+;; @desc Transfers an NFT if it is NOT listed for sale.
+;; @param id - The ID of the NFT.
+;; @param recipient - The principal to receive the NFT.
+;; @returns (ok bool) - Returns true if transfer succeeds.
 (define-public (transfer (id uint) (recipient principal))
   (begin
     (asserts! (is-eq (some tx-sender) (nft-get-owner? stackhub-nft id)) ERR-UNAUTHORIZED)
