@@ -83,7 +83,10 @@
     (var-set total-fees (+ (var-get total-fees) fee))
     (ok {amount: payout, fee: fee})))
 
-;; Request unstake - emits event for owner to process
+;; Request Unstake - Public Function
+;; @desc User requests to unstake funds. Emits event for processing.
+;; @param amount - The amount to unstake.
+;; @returns (ok bool) - Returns true if request is valid.
 (define-public (request-unstake (amount uint))
   (let ((stake-data (unwrap! (map-get? stakes tx-sender) ERR-NO-STAKE)))
     (asserts! (>= (get amount stake-data) amount) ERR-INSUFFICIENT)
