@@ -38,7 +38,13 @@
 (define-read-only (get-last-token-id)
   (var-get last-token-id))
 
-;; Create new token - pays 5 STX fee
+;; Create Token - Public Function
+;; @desc Creates a new custom token with specified parameters.
+;; @param name - The name of the token.
+;; @param symbol - The symbol/ticker.
+;; @param decimals - The number of decimal places.
+;; @param initial-supply - The amount to mint to the creator.
+;; @returns (ok uint) - Returns the new token ID.
 (define-public (create-token (name (string-ascii 32)) (symbol (string-ascii 10)) (decimals uint) (initial-supply uint))
   (let ((id (+ (var-get last-token-id) u1)))
     (try! (stx-transfer? CREATION-FEE tx-sender CONTRACT-OWNER))
