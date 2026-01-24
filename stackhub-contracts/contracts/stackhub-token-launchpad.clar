@@ -25,7 +25,7 @@
 
 (define-map balances {token-id: uint, owner: principal} uint)
 
-;; Read functions
+;; Read functions - Public Getters
 (define-read-only (get-token-info (id uint))
   (map-get? token-info id))
 
