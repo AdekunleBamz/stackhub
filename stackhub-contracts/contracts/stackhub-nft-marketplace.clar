@@ -4,12 +4,14 @@
 (define-constant CONTRACT-OWNER tx-sender)
 
 ;; Error Constants
+;; @desc Error code when sender is not owner (u100)
 (define-constant ERR-NOT-OWNER (err u100))      ;; Sender is not the owner
 (define-constant ERR-NOT-FOUND (err u101))      ;; Entity not found
 (define-constant ERR-UNAUTHORIZED (err u102))   ;; Unauthorized action
 (define-constant ERR-LISTED (err u103))         ;; Token already listed
 (define-constant ERR-NOT-LISTED (err u104))     ;; Token not listed
 (define-constant ERR-PRICE (err u105))          ;; Invalid price
+;; @desc 1.25% fee (125 basis points)
 (define-constant PLATFORM-FEE u125) ;; 1.25% = 125/10000
 
 (define-data-var last-token-id uint u0)
