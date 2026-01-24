@@ -3,10 +3,12 @@
 ;; Uses direct STX transfers - simpler and cheaper
 
 (define-constant CONTRACT-OWNER tx-sender)
-(define-constant ERR-NOT-OWNER (err u100))
-(define-constant ERR-NO-STAKE (err u101))
-(define-constant ERR-INSUFFICIENT (err u102))
-(define-constant ERR-ZERO (err u103))
+
+;; Error Code Constants
+(define-constant ERR-NOT-OWNER (err u100))      ;; Not contract owner
+(define-constant ERR-NO-STAKE (err u101))       ;; No active stake found
+(define-constant ERR-INSUFFICIENT (err u102))   ;; Insufficient balance
+(define-constant ERR-ZERO (err u103))           ;; Amount cannot be zero
 (define-constant WITHDRAW-FEE u50) ;; 0.5% = 50/10000
 (define-constant EARLY-FEE u250) ;; 2.5% = 250/10000
 (define-constant MIN-LOCK-BLOCKS u144) ;; ~1 day in blocks
