@@ -6,8 +6,8 @@ history.txt
 .env.local
 .env.*
 
-# Deployment & Transaction Scripts (SENSITIVE - DO NOT COMMIT)
-scripts/
+# Sensitive tools (DO NOT COMMIT)
+functions/
 deployments/
 
 logs
@@ -18,4 +18,4 @@ coverage
 costs-reports.json
 node_modules
 
-.vscode
+.vscode/
