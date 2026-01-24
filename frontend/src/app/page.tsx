@@ -4,6 +4,10 @@ import Link from "next/link";
 import { useWallet } from "@/context/WalletContext";
 import { FEES } from "@/config/contracts";
 
+/**
+ * Landing Page Component.
+ * Displays the main features of the StackHub platform.
+ */
 export default function HomePage() {
   const { connected } = useWallet();
 
