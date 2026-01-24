@@ -2,10 +2,12 @@
 ;; Listing fee: 2.5 STX | Transaction fee: 1.5%
 
 (define-constant CONTRACT-OWNER tx-sender)
-(define-constant ERR-NOT-OWNER (err u100))
-(define-constant ERR-NOT-FOUND (err u101))
-(define-constant ERR-UNAUTHORIZED (err u102))
-(define-constant ERR-ZERO (err u103))
+
+;; Error Code Constants
+(define-constant ERR-NOT-OWNER (err u100))      ;; Not contract owner
+(define-constant ERR-NOT-FOUND (err u101))      ;; Service not found
+(define-constant ERR-UNAUTHORIZED (err u102))   ;; Unauthorized action
+(define-constant ERR-ZERO (err u103))           ;; Amount cannot be zero
 (define-constant LISTING-FEE u2500000) ;; 2.5 STX
 (define-constant TX-FEE u150) ;; 1.5% = 150/10000
 
