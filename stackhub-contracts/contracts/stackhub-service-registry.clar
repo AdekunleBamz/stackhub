@@ -37,7 +37,11 @@
 (define-read-only (get-earnings (who principal))
   (default-to u0 (map-get? provider-earnings who)))
 
-;; Register service - pays 2.5 STX fee
+;; Register Service - Public Function
+;; @desc Listing a new service on the platform.
+;; @param title - The title/name of the service.
+;; @param price - The cost in micro-STX.
+;; @returns (ok uint) - Returns the new service ID.
 (define-public (register-service (title (string-ascii 64)) (price uint))
   (let ((id (+ (var-get last-service-id) u1)))
     (asserts! (> price u0) ERR-ZERO)
