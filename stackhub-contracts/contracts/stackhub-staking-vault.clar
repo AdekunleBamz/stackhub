@@ -9,8 +9,11 @@
 (define-constant ERR-NO-STAKE (err u101))       ;; No active stake found
 (define-constant ERR-INSUFFICIENT (err u102))   ;; Insufficient balance
 (define-constant ERR-ZERO (err u103))           ;; Amount cannot be zero
+;; @desc 0.5% fee on normal withdrawal
 (define-constant WITHDRAW-FEE u50) ;; 0.5% = 50/10000
+;; @desc 2.5% penalty fee for early unstake
 (define-constant EARLY-FEE u250) ;; 2.5% = 250/10000
+;; @desc 144 blocks ~ 24 hours lock period
 (define-constant MIN-LOCK-BLOCKS u144) ;; ~1 day in blocks
 
 (define-data-var total-staked uint u0)
