@@ -2,6 +2,11 @@
 import { describe, expect, it } from "vitest";
 import { Cl } from "@stacks/transactions";
 
+/**
+ * Test Suite: StackHub Staking Vault
+ * Validates staking logic, unstake requests, and time-lock mechanisms.
+ * Checks mathematical accuracy of potential rewards (mocked).
+ */
 const accounts = simnet.getAccounts();
 const deployer = accounts.get("deployer")!;
 const wallet1 = accounts.get("wallet_1")!;
