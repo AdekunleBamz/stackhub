@@ -16,11 +16,15 @@
 ;; @desc 144 blocks ~ 24 hours lock period
 (define-constant MIN-LOCK-BLOCKS u144) ;; ~1 day in blocks
 
+;; @desc Total STX currently staked
 (define-data-var total-staked uint u0)
+;; @desc Total fees accrued
 (define-data-var total-fees uint u0)
+;; @desc Current contract liquid balance
 (define-data-var vault-balance uint u0)
 
 ;; Staking Data
+;; @desc Map of principal to their betting info
 (define-map stakes principal {amount: uint, start-block: uint})
 
 ;; Read functions - Public Getters
