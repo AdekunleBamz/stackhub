@@ -1,7 +1,7 @@
 [project]
 name = 'stackhub-contracts'
-description = ''
-authors = []
+description = 'DeFi Platform Contracts for StackHub'
+authors = ['AdekunleBamz']
 telemetry = true
 cache_dir = './.cache'
 requirements = []
