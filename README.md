@@ -1,5 +1,8 @@
 # StackHub - DeFi Platform on Stacks
 
+![Stacks Connected](https://img.shields.io/badge/Stacks-Connected-purple.svg)
+![License](https://img.shields.io/badge/License-MIT-blue.svg)
+
 A multi-service DeFi platform built on the Stacks blockchain with 4 fee-generating smart contracts.
 
 ## 🚀 Live on Mainnet
