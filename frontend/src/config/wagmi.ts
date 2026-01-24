@@ -13,7 +13,10 @@ if (!projectId || projectId === 'YOUR_PROJECT_ID') {
 // Supported networks - explicitly typed as tuple
 export const networks: [AppKitNetwork, ...AppKitNetwork[]] = [mainnet, arbitrum, optimism, polygon, base];
 
-// Create wagmi adapter
+/**
+ * Wagmi Adapter configuration for Reown AppKit.
+ * Configured with cookie storage for SSR compatibility.
+ */
 export const wagmiAdapter = new WagmiAdapter({
   storage: createStorage({
     storage: cookieStorage,
