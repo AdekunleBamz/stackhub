@@ -2,6 +2,11 @@
 import { describe, expect, it } from "vitest";
 import { Cl } from "@stacks/transactions";
 
+/**
+ * Test Suite: StackHub Token Launchpad
+ * Verifies token creation (SIP-010 derived), supply management, and creation fees.
+ * Ensures metadata is stored correctly.
+ */
 const accounts = simnet.getAccounts();
 const deployer = accounts.get("deployer")!;
 const wallet1 = accounts.get("wallet_1")!;
