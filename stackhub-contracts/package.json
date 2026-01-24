@@ -11,6 +11,13 @@
   },
   "author": "StackHub Team",
   "license": "ISC",
+  "keywords": [
+    "stacks",
+    "clarity",
+    "blockchain",
+    "defi",
+    "nft"
+  ],
   "dependencies": {
     "@scure/bip32": "^2.0.1",
     "@stacks/clarinet-sdk": "^3.13.1",
