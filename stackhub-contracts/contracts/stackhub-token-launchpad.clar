@@ -12,11 +12,14 @@
 ;; @desc 5 STX fixed fee for creation
 (define-constant CREATION-FEE u5000000) ;; 5 STX
 
+;; @desc Tracks the most recent Token ID
 (define-data-var last-token-id uint u0)
+;; @desc Tracks total creation fees collected
 (define-data-var total-fees uint u0)
 
 (define-fungible-token stackhub-ft)
 
+;; @desc Stores metadata and supply info for each token
 (define-map token-info uint {
   name: (string-ascii 32),
   symbol: (string-ascii 10),
@@ -25,6 +28,7 @@
   total-supply: uint
 })
 
+;; @desc Stores token balances (SIP-010 style map)
 (define-map balances {token-id: uint, owner: principal} uint)
 
 ;; Read functions - Public Getters
