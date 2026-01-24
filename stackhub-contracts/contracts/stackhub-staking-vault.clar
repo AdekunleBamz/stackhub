@@ -17,6 +17,7 @@
 (define-data-var total-fees uint u0)
 (define-data-var vault-balance uint u0)
 
+;; Staking Data
 (define-map stakes principal {amount: uint, start-block: uint})
 
 ;; Read functions
