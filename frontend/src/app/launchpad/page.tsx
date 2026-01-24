@@ -16,6 +16,9 @@ export default function LaunchpadPage() {
   const [decimals, setDecimals] = useState("6");
   const [supply, setSupply] = useState("");
 
+  /**
+   * Calculates total supply including decimals and invokes token creation.
+   */
   const handleCreate = async () => {
     if (!name || !symbol || !supply) return alert("Please fill all fields");
     const totalSupply = parseInt(supply) * Math.pow(10, parseInt(decimals));
