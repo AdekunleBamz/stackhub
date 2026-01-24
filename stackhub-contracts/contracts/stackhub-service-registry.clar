@@ -8,7 +8,9 @@
 (define-constant ERR-NOT-FOUND (err u101))      ;; Service not found
 (define-constant ERR-UNAUTHORIZED (err u102))   ;; Unauthorized action
 (define-constant ERR-ZERO (err u103))           ;; Amount cannot be zero
+;; @desc 2.5 STX fee to list a service
 (define-constant LISTING-FEE u2500000) ;; 2.5 STX
+;; @desc 1.5% transaction fee on payments
 (define-constant TX-FEE u150) ;; 1.5% = 150/10000
 
 (define-data-var last-service-id uint u0)
