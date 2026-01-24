@@ -36,9 +36,11 @@
 (define-read-only (get-total-staked)
   (var-get total-staked))
 
+;; @desc Get total fees collected
 (define-read-only (get-total-fees)
   (var-get total-fees))
 
+;; @desc Get active vault balance
 (define-read-only (get-vault-balance)
   (var-get vault-balance))
 
