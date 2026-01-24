@@ -1,5 +1,9 @@
 import type { NextConfig } from "next";
 
+/**
+ * Next.js Configuration
+ * Includes Polyfills for crypto-browserify (required for Stacks.js).
+ */
 const nextConfig: NextConfig = {
   reactCompiler: true,
   turbopack: {},
