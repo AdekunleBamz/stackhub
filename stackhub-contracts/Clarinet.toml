@@ -29,6 +29,8 @@ path = 'contracts/stackhub-staking-vault.clar'
 clarity_version = 4
 epoch = 'latest'
 
+# Contract: Token Launchpad
+# Logic for creating new SIP-010 fungible tokens.
 [contracts.stackhub-token-launchpad]
 path = 'contracts/stackhub-token-launchpad.clar'
 clarity_version = 4
