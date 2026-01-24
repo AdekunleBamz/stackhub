@@ -1,4 +1,8 @@
 {
+  /**
+   * Smart Contract Tests TypeScript Configuration
+   * Optimized for Vitest and Clarinet SDK.
+   */
   "compilerOptions": {
     "target": "ESNext",
     "useDefineForClassFields": true,
