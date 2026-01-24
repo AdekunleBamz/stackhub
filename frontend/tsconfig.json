@@ -1,4 +1,8 @@
 {
+  /**
+   * Next.js TypeScript Configuration
+   * Configured for strict type checking and modern ES features.
+   */
   "compilerOptions": {
     "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
