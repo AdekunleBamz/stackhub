@@ -71,7 +71,10 @@
     (map-delete listings id)
     (ok true)))
 
-;; Buy NFT - 1.25% fee to platform
+;; Buy NFT - Public Function
+;; @desc Purchases a listed NFT, distributes payment and platform fee.
+;; @param id - The ID of the NFT to buy.
+;; @returns (ok bool) - Returns true if successful.
 (define-public (buy-nft (id uint))
   (let (
     (listing (unwrap! (map-get? listings id) ERR-NOT-LISTED))
