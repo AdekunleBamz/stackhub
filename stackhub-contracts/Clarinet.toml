@@ -10,28 +10,28 @@ requirements = []
 
 # Contract: NFT Marketplace
 # Logic for listing, dealing, and minting NFTs.
-[contracts.stackhub-nft-marketplace]
+[contracts.stackhub-nft-marketplace-v2q]
 path = 'contracts/stackhub-nft-marketplace.clar'
 clarity_version = 4
 epoch = 'latest'
 
 # Contract: Service Registry
 # Logic for service providers to register and receive payments.
-[contracts.stackhub-service-registry]
+[contracts.stackhub-service-registry-v2q]
 path = 'contracts/stackhub-service-registry.clar'
 clarity_version = 4
 epoch = 'latest'
 
 # Contract: Staking Vault
 # Logic for time-locked stacking and rewards.
-[contracts.stackhub-staking-vault]
+[contracts.stackhub-staking-vault-v2q]
 path = 'contracts/stackhub-staking-vault.clar'
 clarity_version = 4
 epoch = 'latest'
 
 # Contract: Token Launchpad
 # Logic for creating new SIP-010 fungible tokens.
-[contracts.stackhub-token-launchpad]
+[contracts.stackhub-token-launchpad-v2q]
 path = 'contracts/stackhub-token-launchpad.clar'
 clarity_version = 4
 epoch = 'latest'
