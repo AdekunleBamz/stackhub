@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useWallet } from "@/context/WalletContext";
 import { createToken } from "@/lib/contracts";
 
@@ -20,6 +20,23 @@ export default function LaunchpadPage() {
   const [supply, setSupply] = useState("");
   const [supplyError, setSupplyError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  // Persist form state to localStorage
+  useEffect(() => {
+    const savedState = localStorage.getItem("launchpadFormState");
+    if (savedState) {
+      const { name: savedName, symbol: savedSymbol, decimals: savedDecimals, supply: savedSupply } = JSON.parse(savedState);
+      setName(savedName || "");
+      setSymbol(savedSymbol || "");
+      setDecimals(savedDecimals || "6");
+      setSupply(savedSupply || "");
+    }
+  }, []);
+
+  // Save form state when values change
+  useEffect(() => {
+    localStorage.setItem("launchpadFormState", JSON.stringify({ name, symbol, decimals, supply }));
+  }, [name, symbol, decimals, supply]);
 
   const validateName = (value: string) => {
     if (!value.trim()) {
