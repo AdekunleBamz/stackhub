@@ -49,6 +49,88 @@
   .error-shake {
     @apply animate-pulse;
   }
+
+  /* Focus visible styles for accessibility */
+  .focus-visible {
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2;
+  }
+
+  .focus-visible-inset {
+    @apply focus:outline-none focus-visible:ring-2-purple focus-visible:ring-500 focus-visible:ring-inset;
+  }
+
+  /* Touch-friendly interactive elements */
+  .touch-manipulation {
+    @apply touch-manipulation;
+  }
+
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+
+  .touch-target-lg {
+    @apply min-h-[48px] min-w-[48px];
+  }
+
+  /* Button styles */
+  .btn {
+    @apply inline-flex items-center justify-center px-4 py-2 font-medium rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-primary {
+    @apply btn bg-purple-600 text-white hover:bg-purple-700 active:bg-purple-800;
+  }
+
+  .btn-secondary {
+    @apply btn bg-gray-100 text-gray-900 hover:bg-gray-200 active:bg-gray-300 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600;
+  }
+
+  .btn-danger {
+    @apply btn bg-red-600 text-white hover:bg-red-700 active:bg-red-800;
+  }
+
+  .btn-success {
+    @apply btn bg-green-600 text-white hover:bg-green-700 active:bg-green-800;
+  }
+
+  .btn-lg {
+    @apply px-6 py-3 text-lg;
+  }
+
+  .btn-sm {
+    @apply px-3 py-1.5 text-sm;
+  }
+
+  /* Input styles */
+  .input {
+    @apply block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:border-transparent transition-colors dark:bg-gray-800 dark:border-gray-600;
+  }
+
+  .input-error {
+    @apply border-red-500 focus-visible:ring-red-500;
+  }
+
+  .input-disabled {
+    @apply bg-gray-100 cursor-not-allowed dark:bg-gray-700;
+  }
+
+  /* Card styles */
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6;
+  }
+
+  .card-hover {
+    @apply card transition-shadow hover:shadow-xl;
+  }
+
+  /* Skip link for accessibility */
+  .skip-link {
+    @apply absolute -top-10 left-0 bg-purple-600 text-white px-4 py-2 z-50 transition-all duration-200;
+  }
+
+  .skip-link:focus {
+    @apply top-0;
+  }
 }
 
 body {
