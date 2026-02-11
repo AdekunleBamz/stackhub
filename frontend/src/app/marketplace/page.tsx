@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useWallet } from "@/context/WalletContext";
 import { mintNFT, listNFT, buyNFT } from "@/lib/contracts";
+import { PageErrorBoundary } from "@/components/ErrorBoundary";
 
 /**
  * NFT Marketplace Page.
@@ -10,7 +11,7 @@ import { mintNFT, listNFT, buyNFT } from "@/lib/contracts";
  * - List owned NFTs for sale
  * - Buy listed NFTs
  */
-export default function MarketplacePage() {
+function MarketplacePage() {
   const { connected } = useWallet();
   const [mintUri, setMintUri] = useState("");
   const [mintUriError, setMintUriError] = useState("");
@@ -219,5 +220,14 @@ export default function MarketplacePage() {
         </ul>
       </div>
     </div>
+  );
+}
+
+// Wrap with error boundary
+export default function MarketplacePageWithErrorBoundary() {
+  return (
+    <PageErrorBoundary>
+      <MarketplacePage />
+    </PageErrorBoundary>
   );
 }
