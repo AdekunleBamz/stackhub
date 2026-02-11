@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useWallet } from "@/context/WalletContext";
 import { mintNFT, listNFT, buyNFT } from "@/lib/contracts";
 import { PageErrorBoundary } from "@/components/ErrorBoundary";
+import { VALIDATION } from "@/config/constants";
 
 /**
  * NFT Marketplace Page.
@@ -136,6 +137,7 @@ function MarketplacePage() {
                 onChange={(e) => setMintUri(e.target.value)}
                 onBlur={() => validateUri(mintUri)}
                 placeholder="ipfs://Qm..."
+                maxLength={VALIDATION.URI_MAX_LENGTH}
                 className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-colors ${
                   mintUriError ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-purple-500"
                 }`}
