@@ -114,9 +114,11 @@ function ToastContainer({ toasts, onRemove }: { toasts: Toast[]; onRemove: (id: 
 }
 
 /**
- * Individual Toast Item
+ * Individual Toast Item with copy functionality
  */
 function ToastItem({ toast, onRemove }: { toast: Toast; onRemove: (id: string) => void }) {
+  const [copied, setCopied] = useState(false);
+  
   const styles: Record<ToastType, { bg: string; icon: string; border: string }> = {
     success: {
       bg: 'bg-green-50 dark:bg-green-900/30',
@@ -142,6 +144,22 @@ function ToastItem({ toast, onRemove }: { toast: Toast; onRemove: (id: string) =
 
   const style = styles[toast.type];
 
+  // Extract TX hash from message if present
+  const txIdMatch = toast.message?.match(/Transaction ID:\s*([A-Za-z0-9]+)/);
+  const txId = txIdMatch ? txIdMatch[1] : null;
+
+  const handleCopy = async () => {
+    if (txId) {
+      try {
+        await navigator.clipboard.writeText(txId);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } catch (err) {
+        console.error('Failed to copy:', err);
+      }
+    }
+  };
+
   return (
     <div
       className={`${style.bg} ${style.border} border rounded-lg p-4 shadow-lg animate-in slide-in-from-right fade-in duration-300`}
@@ -152,7 +170,26 @@ function ToastItem({ toast, onRemove }: { toast: Toast; onRemove: (id: string) =
         <div className="flex-1 min-w-0">
           <h4 className="font-medium text-gray-900 dark:text-white">{toast.title}</h4>
           {toast.message && (
-            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{toast.message}</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+              {toast.message}
+              {txId && (
+                <button
+                  onClick={handleCopy}
+                  className="ml-2 inline-flex items-center gap-1 text-purple-600 hover:text-purple-800 dark:text-purple-400 dark:hover:text-purple-300 font-mono text-xs bg-purple-100 dark:bg-purple-900/30 px-2 py-0.5 rounded transition-colors cursor-pointer"
+                  aria-label={copied ? 'Transaction hash copied to clipboard' : 'Copy transaction hash'}
+                >
+                  <span className="select-all">{txId.slice(0, 8)}...{txId.slice(-4)}</span>
+                  {copied ? (
+                    <span aria-hidden="true">✓</span>
+                  ) : (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                  )}
+                </button>
+              )}
+            </p>
           )}
         </div>
         <button
