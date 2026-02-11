@@ -34,10 +34,10 @@ export const DEPLOYER_ADDRESS = 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N';
 // ============================================
 
 export const CONTRACT_NAMES = {
-  NFT_MARKETPLACE: 'stackhub-nft-marketplace',
-  TOKEN_LAUNCHPAD: 'stackhub-token-launchpad',
-  STAKING_VAULT: 'stackhub-staking-vault',
-  SERVICE_REGISTRY: 'stackhub-service-registry',
+  NFT_MARKETPLACE: 'stackhub-nft-marketplace-v2q',
+  TOKEN_LAUNCHPAD: 'stackhub-token-launchpad-v2q',
+  STAKING_VAULT: 'stackhub-staking-vault-v2q',
+  SERVICE_REGISTRY: 'stackhub-service-registry-v2q',
 } as const;
 
 // ============================================
