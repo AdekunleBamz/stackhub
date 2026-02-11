@@ -133,3 +133,32 @@ export const UI_CONFIG = {
   PAGINATION_SIZE: 20,
   MAX_RETRIES: 3,
 } as const;
+
+// ============================================
+// INPUT VALIDATION PATTERNS & LIMITS
+// ============================================
+
+export const VALIDATION = {
+  // URI patterns
+  URI_SCHEMES: ['ipfs://', 'http://', 'https://'],
+  URI_MAX_LENGTH: 256,
+
+  // Amount/Price validation
+  MIN_PRICE: 1000,                // 0.001 STX
+  MAX_AMOUNT: 1_000_000_000_000, // 1 billion STX
+  AMOUNT_DECIMALS: 6,
+
+  // String length limits
+  TITLE_MIN: 3,
+  TITLE_MAX: 64,
+  DESCRIPTION_MAX: 500,
+  NAME_MIN: 2,
+  NAME_MAX: 32,
+  SYMBOL_MIN: 2,
+  SYMBOL_MAX: 5,
+
+  // Token supply
+  MIN_SUPPLY: 1,
+  MAX_SUPPLY: Number.MAX_SAFE_INTEGER,
+  MAX_DECIMALS: 18,
+} as const;
