@@ -164,3 +164,34 @@ export function validateServiceId(serviceId: number): ValidationResult {
   }
   return { valid: true };
 }
+/**
+ * Create a debounced validation function.
+ * @param fn - The validation function to debounce.
+ * @param delay - Debounce delay in milliseconds.
+ */
+export function createDebouncedValidator(
+  fn: (value: string) => ValidationResult,
+  delay: number = 300
+): (value: string) => void {
+  let timeoutId: NodeJS.Timeout;
+  return (value: string) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      fn(value);
+    }, delay);
+  };
+}
+
+/**
+ * Batch validate multiple fields.
+ * @param validators - Object with field name as key and validator function as value.
+ */
+export function validateBatch(
+  validators: Record<string, () => ValidationResult>
+): Record<string, ValidationResult> {
+  const results: Record<string, ValidationResult> = {};
+  for (const [field, validator] of Object.entries(validators)) {
+    results[field] = validator();
+  }
+  return results;
+}
