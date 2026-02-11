@@ -121,98 +121,138 @@ function MarketplacePage() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <h1 className="text-4xl font-bold text-gray-900 mb-2">🎨 NFT Marketplace</h1>
-      <p className="text-gray-600 mb-8">Mint, list, and trade NFTs with only 1.25% platform fee</p>
+      <header className="mb-8">
+        <h1 className="text-4xl font-bold text-gray-900 mb-2">🎨 NFT Marketplace</h1>
+        <p className="text-gray-600">Mint, list, and trade NFTs with only 1.25% platform fee</p>
+      </header>
 
-      <div className="grid md:grid-cols-3 gap-6">
+      <div className="grid md:grid-cols-3 gap-6" role="list">
         {/* Mint NFT */}
-        <div className="bg-white rounded-2xl shadow-lg p-6">
+        <article className="bg-white rounded-2xl shadow-lg p-6" role="listitem">
           <h2 className="text-xl font-bold text-gray-900 mb-4">Mint NFT</h2>
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">IPFS URI</label>
-              <input
-                type="text"
-                value={mintUri}
-                onChange={(e) => setMintUri(e.target.value)}
-                onBlur={() => validateUri(mintUri)}
-                placeholder="ipfs://Qm..."
-                maxLength={VALIDATION.URI_MAX_LENGTH}
-                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-colors ${
-                  mintUriError ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-purple-500"
-                }`}
-              />
-              {mintUriError && <p className="text-red-500 text-xs mt-1">{mintUriError}</p>}
-            </div>
-            <button
-              onClick={handleMint}
-              disabled={!!mintUriError || !mintUri}
-              className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 rounded-lg font-medium hover:from-purple-700 hover:to-pink-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Mint NFT
-            </button>
-          </div>
-        </div>
+          <form onSubmit={(e) => { e.preventDefault(); handleMint(); }}>
+            <fieldset className="space-y-4 border-none p-0 m-0">
+              <legend className="sr-only">Mint NFT Form</legend>
+              <div>
+                <label htmlFor="mint-uri" className="block text-sm font-medium text-gray-700 mb-1">IPFS URI</label>
+                <input
+                  id="mint-uri"
+                  type="text"
+                  value={mintUri}
+                  onChange={(e) => setMintUri(e.target.value)}
+                  onBlur={() => validateUri(mintUri)}
+                  placeholder="ipfs://Qm..."
+                  maxLength={VALIDATION.URI_MAX_LENGTH}
+                  aria-describedby={mintUriError ? "mint-uri-error" : undefined}
+                  aria-invalid={!!mintUriError}
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-colors ${
+                    mintUriError ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-purple-500"
+                  }`}
+                />
+                {mintUriError && (
+                  <p id="mint-uri-error" className="text-red-500 text-xs mt-1" role="alert">{mintUriError}</p>
+                )}
+              </div>
+              <button
+                type="submit"
+                disabled={!!mintUriError || !mintUri}
+                className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 rounded-lg font-medium hover:from-purple-700 hover:to-pink-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Mint NFT
+              </button>
+            </fieldset>
+          </form>
+        </article>
 
         {/* List NFT */}
-        <div className="bg-white rounded-2xl shadow-lg p-6">
+        <article className="bg-white rounded-2xl shadow-lg p-6" role="listitem">
           <h2 className="text-xl font-bold text-gray-900 mb-4">List for Sale</h2>
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Token ID</label>
-              <input
-                type="number"
-                value={listTokenId}
-                onChange={(e) => setListTokenId(e.target.value)}
-                placeholder="1"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Price (STX)</label>
-              <input
-                type="number"
-                value={listPrice}
-                onChange={(e) => setListPrice(e.target.value)}
-                placeholder="10"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              />
-            </div>
-            <button
-              onClick={handleList}
-              className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 text-white py-3 rounded-lg font-medium hover:from-blue-700 hover:to-cyan-700 transition-all"
-            >
-              List NFT
-            </button>
-          </div>
-        </div>
+          <form onSubmit={(e) => { e.preventDefault(); handleList(); }}>
+            <fieldset className="space-y-4 border-none p-0 m-0">
+              <legend className="sr-only">List NFT for Sale Form</legend>
+              <div>
+                <label htmlFor="list-token-id" className="block text-sm font-medium text-gray-700 mb-1">Token ID</label>
+                <input
+                  id="list-token-id"
+                  type="number"
+                  value={listTokenId}
+                  onChange={(e) => setListTokenId(e.target.value)}
+                  placeholder="1"
+                  aria-describedby={listTokenIdError ? "list-token-id-error" : undefined}
+                  aria-invalid={!!listTokenIdError}
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-colors ${
+                    listTokenIdError ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-purple-500"
+                  }`}
+                />
+                {listTokenIdError && (
+                  <p id="list-token-id-error" className="text-red-500 text-xs mt-1" role="alert">{listTokenIdError}</p>
+                )}
+              </div>
+              <div>
+                <label htmlFor="list-price" className="block text-sm font-medium text-gray-700 mb-1">Price (STX)</label>
+                <input
+                  id="list-price"
+                  type="number"
+                  value={listPrice}
+                  onChange={(e) => setListPrice(e.target.value)}
+                  placeholder="10"
+                  aria-describedby={listPriceError ? "list-price-error" : undefined}
+                  aria-invalid={!!listPriceError}
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-colors ${
+                    listPriceError ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-purple-500"
+                  }`}
+                />
+                {listPriceError && (
+                  <p id="list-price-error" className="text-red-500 text-xs mt-1" role="alert">{listPriceError}</p>
+                )}
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 text-white py-3 rounded-lg font-medium hover:from-blue-700 hover:to-cyan-700 transition-all"
+              >
+                List NFT
+              </button>
+            </fieldset>
+          </form>
+        </article>
 
         {/* Buy NFT */}
-        <div className="bg-white rounded-2xl shadow-lg p-6">
+        <article className="bg-white rounded-2xl shadow-lg p-6" role="listitem">
           <h2 className="text-xl font-bold text-gray-900 mb-4">Buy NFT</h2>
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Token ID</label>
-              <input
-                type="number"
-                value={buyTokenId}
-                onChange={(e) => setBuyTokenId(e.target.value)}
-                placeholder="1"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              />
-            </div>
-            <button
-              onClick={handleBuy}
-              className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white py-3 rounded-lg font-medium hover:from-green-700 hover:to-emerald-700 transition-all"
-            >
-              Buy NFT
-            </button>
-          </div>
-        </div>
+          <form onSubmit={(e) => { e.preventDefault(); handleBuy(); }}>
+            <fieldset className="space-y-4 border-none p-0 m-0">
+              <legend className="sr-only">Buy NFT Form</legend>
+              <div>
+                <label htmlFor="buy-token-id" className="block text-sm font-medium text-gray-700 mb-1">Token ID</label>
+                <input
+                  id="buy-token-id"
+                  type="number"
+                  value={buyTokenId}
+                  onChange={(e) => setBuyTokenId(e.target.value)}
+                  placeholder="1"
+                  aria-describedby={buyTokenIdError ? "buy-token-id-error" : undefined}
+                  aria-invalid={!!buyTokenIdError}
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-colors ${
+                    buyTokenIdError ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-purple-500"
+                  }`}
+                />
+                {buyTokenIdError && (
+                  <p id="buy-token-id-error" className="text-red-500 text-xs mt-1" role="alert">{buyTokenIdError}</p>
+                )}
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white py-3 rounded-lg font-medium hover:from-green-700 hover:to-emerald-700 transition-all"
+              >
+                Buy NFT
+              </button>
+            </fieldset>
+          </form>
+        </article>
       </div>
 
       {/* Info Section */}
-      <div className="mt-12 bg-purple-50 rounded-2xl p-6">
+      <aside className="mt-12 bg-purple-50 rounded-2xl p-6" aria-label="How it works">
         <h3 className="text-lg font-bold text-purple-900 mb-2">How it works</h3>
         <ul className="text-purple-800 space-y-2">
           <li>• Upload your image to IPFS (use Pinata, NFT.Storage, etc.)</li>
@@ -220,7 +260,7 @@ function MarketplacePage() {
           <li>• List it for sale at your desired price</li>
           <li>• When sold, 1.25% goes to the platform, rest to you</li>
         </ul>
-      </div>
+      </aside>
     </div>
   );
 }
