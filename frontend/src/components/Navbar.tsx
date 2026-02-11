@@ -1,13 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import React from "react";
 import { ConnectButton } from "./ConnectButton";
 
 /**
  * Navigation bar component containing links to main application features.
  * Displays branding and the wallet connection button.
+ * Memoized to prevent unnecessary re-renders.
  */
-export function Navbar() {
+export const Navbar = React.memo(function Navbar() {
   return (
     <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -41,4 +43,4 @@ export function Navbar() {
       </div>
     </nav>
   );
-}
+});
