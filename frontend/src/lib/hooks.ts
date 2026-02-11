@@ -198,3 +198,76 @@ export function useIsMounted(): boolean {
 
   return mounted;
 }
+/**
+ * Custom hook for form validation with error tracking.
+ * Provides a reusable validation pattern across forms.
+ * @param initialState - Initial field values
+ * @param validators - Map of field names to validation functions
+ */
+export function useFormValidation<T extends Record<string, any>>(
+  initialState: T,
+  validators: Record<keyof T, (value: any) => { valid: boolean; error?: string }>
+) {
+  const [values, setValues] = useState<T>(initialState);
+  const [errors, setErrors] = useState<Partial<Record<keyof T, string>>>({});
+  const [touched, setTouched] = useState<Partial<Record<keyof T, boolean>>>({});
+
+  const validate = useCallback((field: keyof T) => {
+    const validator = validators[field];
+    if (!validator) return true;
+
+    const result = validator(values[field]);
+    if (result.valid) {
+      setErrors((prev) => {
+        const next = { ...prev };
+        delete next[field];
+        return next;
+      });
+    } else {
+      setErrors((prev) => ({ ...prev, [field]: result.error }));
+    }
+    return result.valid;
+  }, [values, validators]);
+
+  const validateAll = useCallback(() => {
+    const newErrors: Partial<Record<keyof T, string>> = {};
+    let isValid = true;
+
+    Object.keys(validators).forEach((field) => {
+      const result = validators[field as keyof T](values[field as keyof T]);
+      if (!result.valid) {
+        newErrors[field as keyof T] = result.error;
+        isValid = false;
+      }
+    });
+
+    setErrors(newErrors);
+    return isValid;
+  }, [values, validators]);
+
+  const setValue = useCallback((field: keyof T, value: any) => {
+    setValues((prev) => ({ ...prev, [field]: value }));
+  }, []);
+
+  const setFieldTouched = useCallback((field: keyof T) => {
+    setTouched((prev) => ({ ...prev, [field]: true }));
+    validate(field);
+  }, [validate]);
+
+  const reset = useCallback(() => {
+    setValues(initialState);
+    setErrors({});
+    setTouched({});
+  }, [initialState]);
+
+  return {
+    values,
+    errors,
+    touched,
+    setValue,
+    setFieldTouched,
+    validate,
+    validateAll,
+    reset,
+  };
+}
