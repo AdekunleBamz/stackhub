@@ -13,15 +13,80 @@ import { mintNFT, listNFT, buyNFT } from "@/lib/contracts";
 export default function MarketplacePage() {
   const { connected } = useWallet();
   const [mintUri, setMintUri] = useState("");
+  const [mintUriError, setMintUriError] = useState("");
   const [listTokenId, setListTokenId] = useState("");
+  const [listTokenIdError, setListTokenIdError] = useState("");
   const [listPrice, setListPrice] = useState("");
+  const [listPriceError, setListPriceError] = useState("");
   const [buyTokenId, setBuyTokenId] = useState("");
+  const [buyTokenIdError, setBuyTokenIdError] = useState("");
+
+  const validateUri = (uri: string) => {
+    if (!uri.trim()) {
+      setMintUriError("URI is required");
+      return false;
+    }
+    if (uri.length > 256) {
+      setMintUriError("URI must be 256 characters or less");
+      return false;
+    }
+    if (!uri.startsWith("ipfs://") && !uri.startsWith("http://") && !uri.startsWith("https://")) {
+      setMintUriError("URI must start with ipfs://, http://, or https://");
+      return false;
+    }
+    setMintUriError("");
+    return true;
+  };
+
+  const validateTokenId = (id: string, field: "list" | "buy") => {
+    if (!id.trim()) {
+      if (field === "list") {
+        setListTokenIdError("Token ID is required");
+      } else {
+        setBuyTokenIdError("Token ID is required");
+      }
+      return false;
+    }
+    const num = parseInt(id, 10);
+    if (isNaN(num) || num < 0) {
+      if (field === "list") {
+        setListTokenIdError("Token ID must be a non-negative integer");
+      } else {
+        setBuyTokenIdError("Token ID must be a non-negative integer");
+      }
+      return false;
+    }
+    if (field === "list") {
+      setListTokenIdError("");
+    } else {
+      setBuyTokenIdError("");
+    }
+    return true;
+  };
+
+  const validatePrice = (price: string) => {
+    if (!price.trim()) {
+      setListPriceError("Price is required");
+      return false;
+    }
+    const num = parseFloat(price);
+    if (isNaN(num) || num <= 0) {
+      setListPriceError("Price must be a positive number");
+      return false;
+    }
+    if (num < 0.001) {
+      setListPriceError("Minimum price is 0.001 STX");
+      return false;
+    }
+    setListPriceError("");
+    return true;
+  };
 
   /**
    * Orchestrates the NFT minting process.
    */
   const handleMint = async () => {
-    if (!mintUri) return alert("Please enter IPFS URI");
+    if (!validateUri(mintUri)) return;
     await mintNFT(mintUri);
     setMintUri("");
   };
@@ -31,14 +96,14 @@ export default function MarketplacePage() {
    * Converts price to microSTX before calling contract.
    */
   const handleList = async () => {
-    if (!listTokenId || !listPrice) return alert("Please fill all fields");
+    if (!validateTokenId(listTokenId, "list") || !validatePrice(listPrice)) return;
     await listNFT(parseInt(listTokenId), parseInt(listPrice) * 1000000);
     setListTokenId("");
     setListPrice("");
   };
 
   const handleBuy = async () => {
-    if (!buyTokenId) return alert("Please enter token ID");
+    if (!validateTokenId(buyTokenId, "buy")) return;
     await buyNFT(parseInt(buyTokenId));
     setBuyTokenId("");
   };
@@ -68,13 +133,18 @@ export default function MarketplacePage() {
                 type="text"
                 value={mintUri}
                 onChange={(e) => setMintUri(e.target.value)}
+                onBlur={() => validateUri(mintUri)}
                 placeholder="ipfs://Qm..."
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-colors ${
+                  mintUriError ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-purple-500"
+                }`}
               />
+              {mintUriError && <p className="text-red-500 text-xs mt-1">{mintUriError}</p>}
             </div>
             <button
               onClick={handleMint}
-              className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 rounded-lg font-medium hover:from-purple-700 hover:to-pink-700 transition-all"
+              disabled={!!mintUriError || !mintUri}
+              className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 rounded-lg font-medium hover:from-purple-700 hover:to-pink-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Mint NFT
             </button>
