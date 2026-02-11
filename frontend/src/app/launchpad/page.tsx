@@ -131,123 +131,153 @@ export default function LaunchpadPage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <h1 className="text-4xl font-bold text-gray-900 mb-2">🚀 Token Launchpad</h1>
-      <p className="text-gray-600 mb-8">Launch your own token on Stacks for just 5 STX</p>
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+      <header className="mb-6 sm:mb-8">
+        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">🚀 Token Launchpad</h1>
+        <p className="text-gray-600 text-base sm:text-lg">Launch your own token on Stacks for just 5 STX</p>
+      </header>
 
-      <div className="bg-white rounded-2xl shadow-lg p-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">Create New Token</h2>
+      <article className="bg-white rounded-2xl shadow-lg p-4 sm:p-6 lg:p-8">
+        <header className="mb-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Create New Token</h2>
+        </header>
         
-        <div className="grid md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Token Name</label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              onBlur={() => validateName(name)}
-              placeholder="My Token"
-              maxLength={32}
-              aria-label="Token Name"
-              aria-required="true"
-              aria-invalid={!!nameError}
-              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent transition-colors ${
-                nameError ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
-              }`}
-            />
-            <div className="flex justify-between mt-1">
-              <p className="text-xs text-gray-500">{name.length}/32 characters</p>
-              {nameError && <p className="text-red-500 text-xs">{nameError}</p>}
+        <form onSubmit={(e) => { e.preventDefault(); handleCreate(); }}>
+          <fieldset className="space-y-4 sm:space-y-6 border-none p-0 m-0">
+            <legend className="sr-only">Token creation form</legend>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              <div>
+                <label htmlFor="token-name" className="block text-sm font-medium text-gray-700 mb-1">
+                  Token Name
+                  <span className="text-red-500 ml-1" aria-hidden="true">*</span>
+                </label>
+                <input
+                  id="token-name"
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  onBlur={() => validateName(name)}
+                  placeholder="My Token"
+                  maxLength={32}
+                  required
+                  aria-required="true"
+                  aria-invalid={!!nameError}
+                  aria-describedby={nameError ? "name-error" : "name-help"}
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent transition-colors ${
+                    nameError ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
+                  }`}
+                />
+                <div className="flex flex-col sm:flex-row sm:justify-between mt-1 gap-1">
+                  <p id="name-help" className="text-xs text-gray-500">{name.length}/32 characters</p>
+                  {nameError && <p id="name-error" className="text-red-500 text-xs" role="alert">{nameError}</p>}
+                </div>
+              </div>
+              
+              <div>
+                <label htmlFor="token-symbol" className="block text-sm font-medium text-gray-700 mb-1">
+                  Symbol
+                  <span className="text-red-500 ml-1" aria-hidden="true">*</span>
+                </label>
+                <input
+                  id="token-symbol"
+                  type="text"
+                  value={symbol}
+                  onChange={(e) => setSymbol(e.target.value.toUpperCase())}
+                  onBlur={() => validateSymbol(symbol)}
+                  placeholder="MTK"
+                  maxLength={5}
+                  required
+                  aria-required="true"
+                  aria-invalid={!!symbolError}
+                  aria-describedby={symbolError ? "symbol-error" : "symbol-help"}
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent transition-colors ${
+                    symbolError ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
+                  }`}
+                />
+                <div className="flex flex-col sm:flex-row sm:justify-between mt-1 gap-1">
+                  <p id="symbol-help" className="text-xs text-gray-500">{symbol.length}/5 characters</p>
+                  {symbolError && <p id="symbol-error" className="text-red-500 text-xs" role="alert">{symbolError}</p>}
+                </div>
+              </div>
+              
+              <div>
+                <label htmlFor="token-decimals" className="block text-sm font-medium text-gray-700 mb-1">
+                  Decimals
+                  <span className="text-red-500 ml-1" aria-hidden="true">*</span>
+                </label>
+                <select
+                  id="token-decimals"
+                  value={decimals}
+                  onChange={(e) => setDecimals(e.target.value)}
+                  onBlur={() => validateDecimals(decimals)}
+                  required
+                  aria-required="true"
+                  aria-invalid={!!decimalsError}
+                  aria-describedby={decimalsError ? "decimals-error" : undefined}
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent transition-colors ${
+                    decimalsError ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
+                  }`}
+                >
+                  <option value="0">0</option>
+                  <option value="6">6 (Recommended)</option>
+                  <option value="8">8</option>
+                  <option value="18">18</option>
+                </select>
+                {decimalsError && <p id="decimals-error" className="text-red-500 text-xs mt-1" role="alert">{decimalsError}</p>}
+              </div>
+              
+              <div>
+                <label htmlFor="token-supply" className="block text-sm font-medium text-gray-700 mb-1">
+                  Initial Supply
+                  <span className="text-red-500 ml-1" aria-hidden="true">*</span>
+                </label>
+                <input
+                  id="token-supply"
+                  type="number"
+                  value={supply}
+                  onChange={(e) => setSupply(e.target.value)}
+                  onBlur={() => validateSupply(supply)}
+                  placeholder="1000000"
+                  required
+                  aria-required="true"
+                  aria-invalid={!!supplyError}
+                  aria-describedby={supplyError ? "supply-error" : undefined}
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent transition-colors ${
+                    supplyError ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
+                  }`}
+                />
+                {supplyError && <p id="supply-error" className="text-red-500 text-xs mt-1" role="alert">{supplyError}</p>}
+              </div>
             </div>
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Symbol</label>
-            <input
-              type="text"
-              value={symbol}
-              onChange={(e) => setSymbol(e.target.value.toUpperCase())}
-              onBlur={() => validateSymbol(symbol)}
-              placeholder="MTK"
-              maxLength={5}
-              aria-label="Token Symbol"
-              aria-required="true"
-              aria-invalid={!!symbolError}
-              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent transition-colors ${
-                symbolError ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
-              }`}
-            />
-            <div className="flex justify-between mt-1">
-              <p className="text-xs text-gray-500">{symbol.length}/5 characters</p>
-              {symbolError && <p className="text-red-500 text-xs">{symbolError}</p>}
+
+            <div className="mt-6 sm:mt-8 p-4 bg-blue-50 rounded-lg">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                <span className="text-blue-900 font-medium">Creation Fee</span>
+                <span className="text-blue-900 font-bold text-lg">5 STX</span>
+              </div>
             </div>
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Decimals</label>
-            <select
-              value={decimals}
-              onChange={(e) => setDecimals(e.target.value)}
-              onBlur={() => validateDecimals(decimals)}
-              aria-label="Token Decimals"
-              aria-required="true"
-              aria-invalid={!!decimalsError}
-              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent transition-colors ${
-                decimalsError ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
-              }`}
+
+            <button
+              type="submit"
+              disabled={isLoading || !!nameError || !!symbolError || !!decimalsError || !!supplyError || !name || !symbol || !supply}
+              className="w-full mt-6 bg-gradient-to-r from-blue-600 to-cyan-600 text-white py-3 sm:py-4 rounded-lg font-bold text-base sm:text-lg hover:from-blue-700 hover:to-cyan-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 touch-manipulation min-h-[48px]"
             >
-              <option value="0">0</option>
-              <option value="6">6 (Recommended)</option>
-              <option value="8">8</option>
-              <option value="18">18</option>
-            </select>
-            {decimalsError && <p className="text-red-500 text-xs mt-1">{decimalsError}</p>}
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Initial Supply</label>
-            <input
-              type="number"
-              value={supply}
-              onChange={(e) => setSupply(e.target.value)}
-              onBlur={() => validateSupply(supply)}
-              placeholder="1000000"
-              aria-label="Initial Supply"
-              aria-required="true"
-              aria-invalid={!!supplyError}
-              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent transition-colors ${
-                supplyError ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
-              }`}
-            />
-            {supplyError && <p className="text-red-500 text-xs mt-1">{supplyError}</p>}
-          </div>
-        </div>
-
-        <div className="mt-8 p-4 bg-blue-50 rounded-lg">
-          <div className="flex justify-between items-center">
-            <span className="text-blue-900 font-medium">Creation Fee</span>
-            <span className="text-blue-900 font-bold">5 STX</span>
-          </div>
-        </div>
-
-        <button
-          onClick={handleCreate}
-          disabled={isLoading || !!nameError || !!symbolError || !!decimalsError || !!supplyError || !name || !symbol || !supply}
-          className="w-full mt-6 bg-gradient-to-r from-blue-600 to-cyan-600 text-white py-4 rounded-lg font-bold text-lg hover:from-blue-700 hover:to-cyan-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-        >
-          {isLoading ? (
-            <>
-              <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-              Creating Token...
-            </>
-          ) : (
-            "Create Token (5 STX)"
-          )}
-        </button>
-      </div>
+              {isLoading ? (
+                <>
+                  <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" aria-hidden="true"></span>
+                  <span>Creating Token...</span>
+                </>
+              ) : (
+                "Create Token (5 STX)"
+              )}
+            </button>
+          </fieldset>
+        </form>
+      </article>
 
       {/* Info Section */}
-      <div className="mt-8 bg-blue-50 rounded-2xl p-6">
+      <aside className="mt-6 sm:mt-8 bg-blue-50 rounded-2xl p-4 sm:p-6" aria-label="Token features">
         <h3 className="text-lg font-bold text-blue-900 mb-2">Token Features</h3>
         <ul className="text-blue-800 space-y-2">
           <li>• You become the token owner with minting rights</li>
@@ -255,7 +285,7 @@ export default function LaunchpadPage() {
           <li>• Mint additional tokens at any time</li>
           <li>• Burn tokens to reduce supply</li>
         </ul>
-      </div>
+      </aside>
     </div>
   );
 }
