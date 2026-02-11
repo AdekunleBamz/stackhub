@@ -12,20 +12,96 @@ import { createToken } from "@/lib/contracts";
 export default function LaunchpadPage() {
   const { connected } = useWallet();
   const [name, setName] = useState("");
+  const [nameError, setNameError] = useState("");
   const [symbol, setSymbol] = useState("");
+  const [symbolError, setSymbolError] = useState("");
   const [decimals, setDecimals] = useState("6");
+  const [decimalsError, setDecimalsError] = useState("");
   const [supply, setSupply] = useState("");
+  const [supplyError, setSupplyError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const validateName = (value: string) => {
+    if (!value.trim()) {
+      setNameError("Token name is required");
+      return false;
+    }
+    if (value.length < 2 || value.length > 32) {
+      setNameError("Token name must be 2-32 characters");
+      return false;
+    }
+    if (!/^[a-zA-Z0-9\s]+$/.test(value)) {
+      setNameError("Token name must be alphanumeric");
+      return false;
+    }
+    setNameError("");
+    return true;
+  };
+
+  const validateSymbol = (value: string) => {
+    if (!value.trim()) {
+      setSymbolError("Symbol is required");
+      return false;
+    }
+    if (value.length < 2 || value.length > 5) {
+      setSymbolError("Symbol must be 2-5 characters");
+      return false;
+    }
+    if (!/^[A-Z]+$/.test(value)) {
+      setSymbolError("Symbol must be uppercase letters only");
+      return false;
+    }
+    setSymbolError("");
+    return true;
+  };
+
+  const validateDecimals = (value: string) => {
+    const num = parseInt(value, 10);
+    if (isNaN(num) || num < 0 || num > 18) {
+      setDecimalsError("Decimals must be between 0 and 18");
+      return false;
+    }
+    setDecimalsError("");
+    return true;
+  };
+
+  const validateSupply = (value: string) => {
+    if (!value.trim()) {
+      setSupplyError("Supply is required");
+      return false;
+    }
+    const num = parseInt(value, 10);
+    if (isNaN(num) || num <= 0) {
+      setSupplyError("Supply must be a positive integer");
+      return false;
+    }
+    if (num > Number.MAX_SAFE_INTEGER) {
+      setSupplyError("Supply exceeds maximum safe value");
+      return false;
+    }
+    setSupplyError("");
+    return true;
+  };
 
   /**
    * Calculates total supply including decimals and invokes token creation.
    */
   const handleCreate = async () => {
-    if (!name || !symbol || !supply) return alert("Please fill all fields");
-    const totalSupply = parseInt(supply) * Math.pow(10, parseInt(decimals));
-    await createToken(name, symbol, parseInt(decimals), totalSupply);
-    setName("");
-    setSymbol("");
-    setSupply("");
+    if (!validateName(name) || !validateSymbol(symbol) || !validateDecimals(decimals) || !validateSupply(supply)) {
+      return;
+    }
+    
+    setIsLoading(true);
+    try {
+      const totalSupply = parseInt(supply) * Math.pow(10, parseInt(decimals));
+      await createToken(name, symbol, parseInt(decimals), totalSupply);
+      setName("");
+      setSymbol("");
+      setDecimals("6");
+      setSupply("");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (!connected) {
@@ -52,11 +128,20 @@ export default function LaunchpadPage() {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              onBlur={() => validateName(name)}
               placeholder="My Token"
               maxLength={32}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              aria-label="Token Name"
+              aria-required="true"
+              aria-invalid={!!nameError}
+              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent transition-colors ${
+                nameError ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
+              }`}
             />
-            <p className="text-xs text-gray-500 mt-1">Max 32 characters</p>
+            <div className="flex justify-between mt-1">
+              <p className="text-xs text-gray-500">{name.length}/32 characters</p>
+              {nameError && <p className="text-red-500 text-xs">{nameError}</p>}
+            </div>
           </div>
           
           <div>
@@ -65,11 +150,20 @@ export default function LaunchpadPage() {
               type="text"
               value={symbol}
               onChange={(e) => setSymbol(e.target.value.toUpperCase())}
+              onBlur={() => validateSymbol(symbol)}
               placeholder="MTK"
-              maxLength={10}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              maxLength={5}
+              aria-label="Token Symbol"
+              aria-required="true"
+              aria-invalid={!!symbolError}
+              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent transition-colors ${
+                symbolError ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
+              }`}
             />
-            <p className="text-xs text-gray-500 mt-1">Max 10 characters</p>
+            <div className="flex justify-between mt-1">
+              <p className="text-xs text-gray-500">{symbol.length}/5 characters</p>
+              {symbolError && <p className="text-red-500 text-xs">{symbolError}</p>}
+            </div>
           </div>
           
           <div>
@@ -77,13 +171,20 @@ export default function LaunchpadPage() {
             <select
               value={decimals}
               onChange={(e) => setDecimals(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              onBlur={() => validateDecimals(decimals)}
+              aria-label="Token Decimals"
+              aria-required="true"
+              aria-invalid={!!decimalsError}
+              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent transition-colors ${
+                decimalsError ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
+              }`}
             >
               <option value="0">0</option>
               <option value="6">6 (Recommended)</option>
               <option value="8">8</option>
               <option value="18">18</option>
             </select>
+            {decimalsError && <p className="text-red-500 text-xs mt-1">{decimalsError}</p>}
           </div>
           
           <div>
@@ -92,9 +193,16 @@ export default function LaunchpadPage() {
               type="number"
               value={supply}
               onChange={(e) => setSupply(e.target.value)}
+              onBlur={() => validateSupply(supply)}
               placeholder="1000000"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              aria-label="Initial Supply"
+              aria-required="true"
+              aria-invalid={!!supplyError}
+              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent transition-colors ${
+                supplyError ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
+              }`}
             />
+            {supplyError && <p className="text-red-500 text-xs mt-1">{supplyError}</p>}
           </div>
         </div>
 
@@ -107,9 +215,17 @@ export default function LaunchpadPage() {
 
         <button
           onClick={handleCreate}
-          className="w-full mt-6 bg-gradient-to-r from-blue-600 to-cyan-600 text-white py-4 rounded-lg font-bold text-lg hover:from-blue-700 hover:to-cyan-700 transition-all"
+          disabled={isLoading || !!nameError || !!symbolError || !!decimalsError || !!supplyError || !name || !symbol || !supply}
+          className="w-full mt-6 bg-gradient-to-r from-blue-600 to-cyan-600 text-white py-4 rounded-lg font-bold text-lg hover:from-blue-700 hover:to-cyan-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
-          Create Token (5 STX)
+          {isLoading ? (
+            <>
+              <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+              Creating Token...
+            </>
+          ) : (
+            "Create Token (5 STX)"
+          )}
         </button>
       </div>
 
