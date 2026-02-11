@@ -12,26 +12,76 @@ import { stakeSTX, requestUnstake } from "@/lib/contracts";
 export default function StakingPage() {
   const { connected } = useWallet();
   const [stakeAmount, setStakeAmount] = useState("");
+  const [stakeAmountError, setStakeAmountError] = useState("");
   const [unstakeAmount, setUnstakeAmount] = useState("");
+  const [unstakeAmountError, setUnstakeAmountError] = useState("");
+  const [isStaking, setIsStaking] = useState(false);
+  const [isUnstaking, setIsUnstaking] = useState(false);
+
+  const validateStakeAmount = (amount: string) => {
+    if (!amount.trim()) {
+      setStakeAmountError("Amount is required");
+      return false;
+    }
+    const num = parseFloat(amount);
+    if (isNaN(num) || num <= 0) {
+      setStakeAmountError("Amount must be a positive number");
+      return false;
+    }
+    if (num < 1) {
+      setStakeAmountError("Minimum stake is 1 STX");
+      return false;
+    }
+    setStakeAmountError("");
+    return true;
+  };
+
+  const validateUnstakeAmount = (amount: string) => {
+    if (!amount.trim()) {
+      setUnstakeAmountError("Amount is required");
+      return false;
+    }
+    const num = parseFloat(amount);
+    if (isNaN(num) || num <= 0) {
+      setUnstakeAmountError("Amount must be a positive number");
+      return false;
+    }
+    if (num < 1) {
+      setUnstakeAmountError("Minimum unstake is 1 STX");
+      return false;
+    }
+    setUnstakeAmountError("");
+    return true;
+  };
 
   /**
    * Handles staking amount conversion and contract call.
    */
   const handleStake = async () => {
-    if (!stakeAmount) return alert("Please enter amount");
-    const amount = parseFloat(stakeAmount) * 1000000; // Convert to microstacks
-    await stakeSTX(amount);
-    setStakeAmount("");
+    if (!validateStakeAmount(stakeAmount)) return;
+    setIsStaking(true);
+    try {
+      const amount = parseFloat(stakeAmount) * 1000000;
+      await stakeSTX(amount);
+      setStakeAmount("");
+    } finally {
+      setIsStaking(false);
+    }
   };
 
   /**
    * Handles unstaking request.
    */
   const handleUnstake = async () => {
-    if (!unstakeAmount) return alert("Please enter amount");
-    const amount = parseFloat(unstakeAmount) * 1000000;
-    await requestUnstake(amount);
-    setUnstakeAmount("");
+    if (!validateUnstakeAmount(unstakeAmount)) return;
+    setIsUnstaking(true);
+    try {
+      const amount = parseFloat(unstakeAmount) * 1000000;
+      await requestUnstake(amount);
+      setUnstakeAmount("");
+    } finally {
+      setIsUnstaking(false);
+    }
   };
 
   if (!connected) {
@@ -59,15 +109,32 @@ export default function StakingPage() {
                 type="number"
                 value={stakeAmount}
                 onChange={(e) => setStakeAmount(e.target.value)}
+                onBlur={() => validateStakeAmount(stakeAmount)}
                 placeholder="100"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                min="1"
+                step="0.01"
+                aria-label="Staking Amount"
+                aria-required="true"
+                aria-invalid={!!stakeAmountError}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent transition-colors ${
+                  stakeAmountError ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-green-500"
+                }`}
               />
+              {stakeAmountError && <p className="text-red-500 text-xs mt-1">{stakeAmountError}</p>}
             </div>
             <button
               onClick={handleStake}
-              className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white py-3 rounded-lg font-medium hover:from-green-700 hover:to-emerald-700 transition-all"
+              disabled={isStaking || !!stakeAmountError || !stakeAmount}
+              className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white py-3 rounded-lg font-medium hover:from-green-700 hover:to-emerald-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
-              Stake STX
+              {isStaking ? (
+                <>
+                  <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                  Staking...
+                </>
+              ) : (
+                "Stake STX"
+              )}
             </button>
           </div>
         </div>
@@ -82,15 +149,32 @@ export default function StakingPage() {
                 type="number"
                 value={unstakeAmount}
                 onChange={(e) => setUnstakeAmount(e.target.value)}
+                onBlur={() => validateUnstakeAmount(unstakeAmount)}
                 placeholder="50"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                min="1"
+                step="0.01"
+                aria-label="Unstaking Amount"
+                aria-required="true"
+                aria-invalid={!!unstakeAmountError}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent transition-colors ${
+                  unstakeAmountError ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-orange-500"
+                }`}
               />
+              {unstakeAmountError && <p className="text-red-500 text-xs mt-1">{unstakeAmountError}</p>}
             </div>
             <button
               onClick={handleUnstake}
-              className="w-full bg-gradient-to-r from-orange-600 to-yellow-600 text-white py-3 rounded-lg font-medium hover:from-orange-700 hover:to-yellow-700 transition-all"
+              disabled={isUnstaking || !!unstakeAmountError || !unstakeAmount}
+              className="w-full bg-gradient-to-r from-orange-600 to-yellow-600 text-white py-3 rounded-lg font-medium hover:from-orange-700 hover:to-yellow-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
-              Request Unstake
+              {isUnstaking ? (
+                <>
+                  <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                  Processing...
+                </>
+              ) : (
+                "Request Unstake"
+              )}
             </button>
           </div>
         </div>
