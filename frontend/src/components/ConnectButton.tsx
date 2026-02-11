@@ -1,12 +1,14 @@
 "use client";
 
+import React, { useCallback, useMemo } from "react";
 import { useWallet } from "@/context/WalletContext";
 
 /**
  * Dual-wallet connection button component.
  * Handles connection states for both Stacks (Leather/Xverse) and EVM wallets.
+ * Memoized to prevent unnecessary re-renders.
  */
-export function ConnectButton() {
+export const ConnectButton = React.memo(function ConnectButton() {
   const { 
     stacksConnected, 
     stacksAddress, 
@@ -97,7 +99,7 @@ export function StacksConnectButton() {
       Connect Wallet
     </button>
   );
-}
+});
 
 // Reown AppKit modal button
 export function AppKitButton() {
